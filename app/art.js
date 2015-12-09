@@ -1,5 +1,8 @@
 import processingSrc from 'file!processing-js/processing.js'
-import scriptSrc from 'file!./test.pde'
+import main from 'file!./main.pde'
+import RecursiveCircles from 'file!components/RecursiveCircles.pde'
+import Eye from 'file!components/Eye.pde'
+import ColorTypewriter from 'file!components/ColorTypewriter.pde'
 
 export default {
     init(){
@@ -10,7 +13,9 @@ export default {
         processing.addEventListener('load', () => {
             // set up processing sources
             const canvas = document.getElementById('playground')
-            canvas.setAttribute('data-processing-sources', scriptSrc)
+
+            const sources = [main, RecursiveCircles, Eye, ColorTypewriter]
+            canvas.setAttribute('data-processing-sources', sources.join(' '))
 
             // reload Processing to catch changes
             Processing.reload()
