@@ -16,44 +16,70 @@ class ColorTypewriter{
     // flag for when canvas is full
     boolean full = false;
 
+    char START_CHAR = 'a';
+    char END_CHAR = 'z';
+    char SPACEBAR = ' ';
+
+    int currKey = null;
+    int curKeyCode = null;
+
     ColorTypewriter(int x, int y, int p){
         pxsize = p;
         sizex = x;
         sizey = y;
         width = x * p;
         height = y * p;
-
-        currPixel = null;
     }
 
     void test(){
         println('test')
     }
 
-    void update(int keyval){
+    void update(int keyval, int keyCode){
+        currKey = keyval;
+        currKeyCode = keyCode;
+    }
+
+    void draw(){
         if(full){
             return;
         }
+        if(this.currKey == CODED){
+            println('keycode', this.currKeyCode);
+        }
 
-        currPixel = this.keyvalToColor(keyval);
+        if (this.currKey == CODED && this.currKeyCode == DELETE){
+            prinln('back')
+            this.backward()
+        }   
+        else{
+            noStroke();
+            pushMatrix();
+            scale(pxsize);
+
+            // get color
+            color c = this.keyvalToColor(this.currKey);
+            if(c){
+                fill(c[0], c[1]);
+                rect(nexty, nextx, 1, 1);
+                this.forward();
+            }
+
+            popMatrix();
+        }
         
     }
 
-    void draw(int keyval){
-        if(full){
-            return;
-        }
+    void backward(){
+        nexty--;
+        nextx = nexty < 0? nextx - 1 < 0 ? 0 : nextx - 1 : nextx;
+        nexty = nexty < 0? sizey - 1 : nexty;
+    }
 
-        noStroke();
-        pushMatrix();
-        scale(pxsize);
-
-        fill(currPixel);
-        rect(nexty, nextx, 1, 1);
-        popMatrix()
-        
+    void forward(){
         // get next coordinate
         nexty++;
+
         if (nexty >= sizey){
             nextx++;
             nexty = 0;
@@ -65,9 +91,18 @@ class ColorTypewriter{
     }
 
     color keyvalToColor(int keyvalue){
-        colorMode(HSB, 100, 100, 100);
-        float val = Math.floor(keyvalue / 128.0 * 100);
-        return color(val, 50, 50);
+        // in range of keyboard characters
+        if (keyvalue >= START_CHAR && keyvalue <= END_CHAR){
+            colorMode(HSB, 100, 100, 100);
+            int normalizedValue = keyvalue - START_CHAR;
+            float val = Math.floor(normalizedValue / (END_CHAR - START_CHAR) * 100);
+            return [color(val, 100, 80), 100];
+        }
+        else if(keyvalue == SPACEBAR){
+            return [color(0, 0, 0), 0];
+        }
+
+        return null;
 
     }
 

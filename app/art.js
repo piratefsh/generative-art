@@ -14,6 +14,18 @@ export default {
             // set up processing sources
             const canvas = document.getElementById('playground')
 
+            // processing instance
+
+            canvas.addEventListener('keydown', (e)=>{
+                if(e.keyCode == 8){
+                    e.preventDefault();
+                    const pInstance = Processing.getInstanceById('playground')
+                    pInstance.key.code = new Char(pInstance.CODED)
+                    pInstance.keyCode = new Char(pInstance.DELETE)
+                    pInstance.keyPressed()
+                }
+            })
+
             const sources = [main, RecursiveCircles, Eye, ColorTypewriter]
             canvas.setAttribute('data-processing-sources', sources.join(' '))
 

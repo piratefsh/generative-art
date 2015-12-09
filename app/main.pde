@@ -10,7 +10,7 @@ ColorTypewriter ctw;
 void setup()
 {
   size(width, height);
-  background(125);
+  background(250);
   // noStroke();
   PFont fontA = loadFont("courier");
   textFont(fontA, 14);  
@@ -33,7 +33,8 @@ void draw(){
 }
 
 void keyPressed(){
-  ctw.update(key);
-  ctw.draw();
+    println('key', key, CODED)
+    ctw.update(key, keyCode);
+    ctw.draw();
 }
 
