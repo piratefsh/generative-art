@@ -5,9 +5,6 @@ class ColorTypewriter{
     // size of one pixel
     int pxsize; 
 
-    // actual pixels 
-    int width, height; 
-
     // grid of chars
     color[][] grid;
     int nextx = 0;
@@ -23,53 +20,64 @@ class ColorTypewriter{
     int currKey = null;
     int curKeyCode = null;
 
+
     ColorTypewriter(int x, int y, int p){
         pxsize = p;
         sizex = x;
         sizey = y;
-        width = x * p;
-        height = y * p;
-    }
-
-    void test(){
-        println('test')
+        grid = new grid[sizex][sizey]
     }
 
     void update(int keyval, int code){
         currKey = keyval;
         currKeyCode = code;
-    }
 
-    void draw(){
         if(full){
             return;
         }
 
-        if (this.currKey == CODED){
-            this.backward()
+        // if is backspace, go back
+        if (keyval == CODED && code == DELETE){
+            this.backward();
         }   
+        // else add pixel 
         else{
-            noStroke();
-            pushMatrix();
-            scale(pxsize);
-
             // get color
             color c = this.keyvalToColor(this.currKey);
             if(c){
-                fill(c[0], c[1]);
-                rect(nexty, nextx, 1, 1);
+                grid[nextx][nexty] = c;
                 this.forward();
             }
 
-            popMatrix();
         }
-        
+    }
+
+    void draw(){
+        // clear and set stules
+        background(0, 0);
+        noStroke();
+
+        // scale to pixel size
+        pushMatrix();
+        scale(pxsize);
+        for(int x = 0; x < sizex; x++){
+            for(int y = 0; y < sizey; y++){
+                color c = grid[x][y];
+                if(c != null){
+                    fill(c[0], c[1]);
+                    rect(y, x, 1, 1);
+                }
+            }
+        }
+        popMatrix();
     }
 
     void backward(){
+        // clear last coordinate
         nexty--;
         nextx = nexty < 0? nextx - 1 < 0 ? 0 : nextx - 1 : nextx;
         nexty = nexty < 0? sizey - 1 : nexty;
+        grid[nextx][nexty] = null;
     }
 
     void forward(){
@@ -80,10 +88,7 @@ class ColorTypewriter{
             nextx++;
             nexty = 0;
         }
-
-        if (nextx >= sizex){
-            full = true;
-        }
+        full = nextx >= sizex
     }
 
     color keyvalToColor(int keyvalue){
@@ -92,14 +97,11 @@ class ColorTypewriter{
             colorMode(HSB, 100, 100, 100);
             int normalizedValue = keyvalue - START_CHAR;
             float val = Math.floor(normalizedValue / (END_CHAR - START_CHAR) * 100);
-            return [color(val, 100, 80), 100];
+            return [color(val, 100, 90), 100];
         }
         else if(keyvalue == SPACEBAR){
             return [color(0, 0, 0), 0];
         }
-
         return null;
-
     }
-
 }
