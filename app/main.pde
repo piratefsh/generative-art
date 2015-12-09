@@ -33,7 +33,6 @@ void draw(){
 }
 
 void keyPressed(){
-    println('key', key, CODED)
     ctw.update(key, keyCode);
     ctw.draw();
 }

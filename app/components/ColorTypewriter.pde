@@ -35,21 +35,17 @@ class ColorTypewriter{
         println('test')
     }
 
-    void update(int keyval, int keyCode){
+    void update(int keyval, int code){
         currKey = keyval;
-        currKeyCode = keyCode;
+        currKeyCode = code;
     }
 
     void draw(){
         if(full){
             return;
         }
-        if(this.currKey == CODED){
-            println('keycode', this.currKeyCode);
-        }
 
-        if (this.currKey == CODED && this.currKeyCode == DELETE){
-            prinln('back')
+        if (this.currKey == CODED){
             this.backward()
         }   
         else{

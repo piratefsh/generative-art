@@ -20,7 +20,7 @@ export default {
                 if(e.keyCode == 8){
                     e.preventDefault();
                     const pInstance = Processing.getInstanceById('playground')
-                    pInstance.key.code = new Char(pInstance.CODED)
+                    pInstance.key = new Char(pInstance.CODED)
                     pInstance.keyCode = new Char(pInstance.DELETE)
                     pInstance.keyPressed()
                 }
