@@ -11,6 +11,9 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
+        noParse: [
+            path.resolve(__dirname, './node_modules/processing-js/processing.js')
+        ],
         loaders: [
             // Babel loader
             {
