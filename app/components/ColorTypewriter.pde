@@ -53,8 +53,8 @@ class ColorTypewriter{
     }
 
     void draw(){
-        // clear and set stules
-        background(0, 0);
+        // clear and set styles
+        background(250);
         noStroke();
 
         // scale to pixel size
