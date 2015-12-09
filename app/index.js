@@ -1,3 +1,2 @@
-import test from './test'
+import art from './art'
 import 'styles/style.scss' 
-test()
