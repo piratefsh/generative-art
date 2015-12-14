@@ -9,7 +9,7 @@ export default {
     init(){
 
         const processing = document.createElement('script')
-        processing.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.16/processing.js')
+        processing.setAttribute('src', processingSrc)
         
         processing.addEventListener('load', () => {
             // set up processing sources

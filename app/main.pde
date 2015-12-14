@@ -3,14 +3,15 @@ import Eye;
 
 int width = 416;
 int height = 416;
-RecursiveCircles rc;
-Eye e1, e2;
-ColorTypewriter ctw;
+// RecursiveCircles rc;
+// Eye e1, e2;
+// ColorTypewriter ctw;
+Tree tree;
 
 void setup()
 {
   size(width, height);
-  background(250);
+  background(255);
   // noStroke();
   PFont fontA = loadFont("courier");
   textFont(fontA, 14);  
@@ -21,8 +22,9 @@ void setup()
   // e2 = new Eye(70, 80, 60)
 
   // ctw = new ColorTypewriter(26, 26, 16)
-
-  
+  tree = new Tree();
+  PVector p = new PVector(1, 1);
+  println(p.dist(new PVector(1, 1)));
 }
 
 void draw(){  
@@ -32,6 +34,8 @@ void draw(){
 
   // e1.display()
   // e2.display()
+  tree.update()
+  tree.draw()
 }
 
 void keyPressed(){
