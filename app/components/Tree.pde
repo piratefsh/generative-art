@@ -19,7 +19,6 @@ public class Branch{
         died = false;
 
         id = lastId++;
-        console.log(id);
     }
 
     void update(){
@@ -44,14 +43,15 @@ public class Branch{
     }
 
     void hasPoint(PVector point){
+        // if not within range, return false
+        if(Math.min(start.x, end.x) > point.x || point.x > Math.max(start.x, end.x)){
+            return false;
+        }
 
         float m = (end.y - start.y) / (end.x - start.x);
         float c = (1 / m) * ((0 - start.y) + (m * start.x));
 
         boolean res = (point.y == m * point.x + c);
-        if(res){
-            console.log(start, end, point);
-        }
 
         return res;
     }
@@ -67,14 +67,14 @@ public class Tree{
 
     Tree(){
         branches = new ArrayList();
-        Branch pos = new Branch(new PVector(50, 50), new PVector(1, 1), color(0, 255, 0));
-        Branch neg = new Branch(new PVector(100, 50), new PVector(-1, 1), color(0, 0, 255));
-        Branch neg3 = new Branch(new PVector(200, 50), new PVector(-2, 2), color(0, 0, 255));
-        Branch neg2 = new Branch(new PVector(130, 200), new PVector(-2, -2), color(255, 0, 0));
-        branches.add(pos);
-        branches.add(neg);
-        branches.add(neg2);
-        branches.add(neg3);
+        Branch green = new Branch(new PVector(50, 50), new PVector(1, 1), color(0, 255, 0));
+        Branch blue = new Branch(new PVector(100, 50), new PVector(-1, 1), color(0, 0, 255));
+        Branch purple = new Branch(new PVector(50, 150), new PVector(1, -1), color(255, 0, 255));
+        Branch red = new Branch(new PVector(132, 202), new PVector(-1, -1), color(255, 0, 0));
+        branches.add(green);
+        branches.add(blue);
+        branches.add(red);
+        branches.add(purple);
     }
 
     void update(){
@@ -85,7 +85,6 @@ public class Tree{
 
             // if grown into another branch, kill branch
             if(!b.died && this.collidedWith(b)){
-                console.log('kill', b.start, b.end)
                 b.die();
             }
         }
@@ -98,12 +97,11 @@ public class Tree{
             Branch b = (Branch) branches.get(i);
 
             // skip comparing with itself
-            if(branch.equals(b)){
+            if(b.equals(branch)){
                 continue;
             }
 
             if(b.hasPoint(branch.end)){
-                console.log('collide');
                 return true;
             }
         }
