@@ -11,7 +11,7 @@ Tree tree;
 void setup()
 {
   size(width, height);
-  background(255);
+  background(250);
   // noStroke();
   PFont fontA = loadFont("courier");
   textFont(fontA, 14);  
@@ -34,6 +34,7 @@ void draw(){
 
   // e1.display()
   // e2.display()
+  background(250);
   tree.update()
   tree.draw()
 }

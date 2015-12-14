@@ -6,23 +6,30 @@ public class Branch{
     PVector end;
     PVector velocity;
     color branchColor;
+    float branchAlpha;
     boolean died;
-
+    int strokeWidth;
     int id;
+    int maxLength;
 
-    Branch(p, v, c){
+    Branch(p, v, c, w, a){
+        maxLength = 100;
         start = p;
         end = new PVector(p.x, p.y);
         velocity = v;
+        strokeWidth = w;
 
         branchColor = c;
+        branchAlpha = a;
         died = false;
 
         id = lastId++;
     }
 
     void update(){
-        if (!died && end.x > 0 && end.y > 0 && end.x < width && end.y < height){
+        if (!died && end.x > 0 && end.y > 0 
+                && end.x < width && end.y < height
+                && Math.abs(end.x - start.x) < maxLength){
             end.add(velocity);
         }
         else{
@@ -31,15 +38,24 @@ public class Branch{
     }
 
     void draw(){
-        if(!died){
-            stroke(branchColor);
-            strokeWeight(1);
-            line(start.x, start.y, end.x, end.y);
-        }
+        stroke(branchColor, branchAlpha);
+        strokeWeight(strokeWidth);
+        line(start.x, start.y, end.x, end.y);
     }
 
     void die(){
         died = true;
+    }
+
+    PVector randomPoint(){
+        // return midpoint for now
+
+        int range = Math.abs(start.x - end.x);
+
+        PVector random = new PVector(start.x, start.y);
+        random.x = Math.floor(random.x + velocity.x * (Math.random() * range));
+        random.y = Math.floor(random.y + velocity.y * (Math.random() * range));
+        return random
     }
 
     void hasPoint(PVector point){
@@ -64,17 +80,38 @@ public class Branch{
 
 public class Tree{
     ArrayList branches;
+    static PVector velocities = [new PVector(1, 1), new PVector(1, -1), new PVector(-1, 1), new PVector(-1, -1)];
+    int numBranches;
 
     Tree(){
+        numBranches = 80;
         branches = new ArrayList();
-        Branch green = new Branch(new PVector(50, 50), new PVector(1, 1), color(0, 255, 0));
-        Branch blue = new Branch(new PVector(100, 50), new PVector(-1, 1), color(0, 0, 255));
-        Branch purple = new Branch(new PVector(50, 150), new PVector(1, -1), color(255, 0, 255));
-        Branch red = new Branch(new PVector(132, 202), new PVector(-1, -1), color(255, 0, 0));
-        branches.add(green);
-        branches.add(blue);
-        branches.add(red);
-        branches.add(purple);
+        // Branch blue = new Branch(new PVector(100, 50), new PVector(-1, 1), color(0, 0, 255), 3);
+        // Branch purple = new Branch(new PVector(50, 150), new PVector(1, -1), color(255, 0, 255), 3);
+        // Branch red = new Branch(new PVector(132, 202), new PVector(-1, -1), color(255, 0, 0), 3);
+        // branches.add(green);
+        // branches.add(blue);
+        // branches.add(red);
+        // branches.add(purple);
+
+        // generate random starting branches
+        for(int i = 0; i < numBranches; i++){
+            PVector randStart = this.randomPoint();
+            PVector randVel = this.randomVelocity();
+            Branch branch = new Branch(randStart, randVel, color(255, 100, 100), 2, 255.0);
+            branches.add(branch);
+        }
+    }
+    PVector randomPoint(){
+        return new PVector(Math.floor(Math.random() * width), Math.floor(Math.random() * height));
+    }
+    PVector randomVelocity(PVector except){
+        PVector rand = velocities[Math.floor(Math.random() * velocities.length)];
+
+        while(except && rand.dist(except) == 0){
+            rand = velocities[Math.floor(Math.random() * velocities.length)];
+        }
+        return rand;
     }
 
     void update(){
@@ -84,8 +121,16 @@ public class Tree{
             b.update();
 
             // if grown into another branch, kill branch
+            // and spawn new one on random point parallel to old branch
             if(!b.died && this.collidedWith(b)){
                 b.die();
+
+                float newAlpha = b.branchAlpha > 50? b.branchAlpha - 30 : 50;
+
+                Branch newBranch = new Branch(b.randomPoint(), this.randomVelocity(b.velocity), 
+                    b.branchColor, b.strokeWidth - 0.5 || 1,
+                    newAlpha);
+                branches.add(newBranch);
             }
         }
 
