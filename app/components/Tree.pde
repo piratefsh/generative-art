@@ -13,7 +13,7 @@ public class Branch{
     int maxLength;
 
     Branch(p, v, c, w, a){
-        maxLength = 100;
+        maxLength = 200;
         start = p;
         end = new PVector(p.x, p.y);
         velocity = v;
@@ -79,32 +79,29 @@ public class Branch{
 }
 
 public class Tree{
-    ArrayList branches;
     static PVector velocities = [new PVector(1, 1), new PVector(1, -1), new PVector(-1, 1), new PVector(-1, -1)];
+    static color colors = [color(255, 100, 100), color(100, 150, 150), color(150, 100, 200), color(150, 150, 50)];
+    ArrayList branches;
     int numBranches;
 
-    Tree(){
-        numBranches = 80;
+    Tree(n){
+        numBranches = n;
         branches = new ArrayList();
-        // Branch blue = new Branch(new PVector(100, 50), new PVector(-1, 1), color(0, 0, 255), 3);
-        // Branch purple = new Branch(new PVector(50, 150), new PVector(1, -1), color(255, 0, 255), 3);
-        // Branch red = new Branch(new PVector(132, 202), new PVector(-1, -1), color(255, 0, 0), 3);
-        // branches.add(green);
-        // branches.add(blue);
-        // branches.add(red);
-        // branches.add(purple);
+        color c = this.randomColor();
 
         // generate random starting branches
         for(int i = 0; i < numBranches; i++){
             PVector randStart = this.randomPoint();
             PVector randVel = this.randomVelocity();
-            Branch branch = new Branch(randStart, randVel, color(255, 100, 100), 2, 255.0);
+            Branch branch = new Branch(randStart, randVel, c, 3, 30);
             branches.add(branch);
         }
     }
+
     PVector randomPoint(){
         return new PVector(Math.floor(Math.random() * width), Math.floor(Math.random() * height));
     }
+
     PVector randomVelocity(PVector except){
         PVector rand = velocities[Math.floor(Math.random() * velocities.length)];
 
@@ -112,6 +109,10 @@ public class Tree{
             rand = velocities[Math.floor(Math.random() * velocities.length)];
         }
         return rand;
+    }
+
+    color randomColor(){
+        return colors[Math.floor(Math.random() * colors.length)];
     }
 
     void update(){
@@ -125,7 +126,7 @@ public class Tree{
             if(!b.died && this.collidedWith(b)){
                 b.die();
 
-                float newAlpha = b.branchAlpha > 50? b.branchAlpha - 30 : 50;
+                float newAlpha = b.branchAlpha < 255? b.branchAlpha + 30 : 255;
 
                 Branch newBranch = new Branch(b.randomPoint(), this.randomVelocity(b.velocity), 
                     b.branchColor, b.strokeWidth - 0.5 || 1,

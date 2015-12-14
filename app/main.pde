@@ -1,8 +1,8 @@
 import RecursiveCircles;
 import Eye;
 
-int width = 416;
-int height = 416;
+int width = window.innerWidth;
+int height = window.innerHeight;
 // RecursiveCircles rc;
 // Eye e1, e2;
 // ColorTypewriter ctw;
@@ -22,9 +22,8 @@ void setup()
   // e2 = new Eye(70, 80, 60)
 
   // ctw = new ColorTypewriter(26, 26, 16)
-  tree = new Tree();
+  tree = new Tree(width/4);
   PVector p = new PVector(1, 1);
-  println(p.dist(new PVector(1, 1)));
 }
 
 void draw(){  
