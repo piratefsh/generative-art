@@ -1,8 +1,8 @@
 import RecursiveCircles;
 import Eye;
 
-int width = 400;
-int height = 400;
+int width = 416;
+int height = 416;
 RecursiveCircles rc;
 Eye e1, e2;
 ColorTypewriter ctw;
@@ -20,7 +20,9 @@ void setup()
   // e1 = new Eye(50, 130, 40)
   // e2 = new Eye(70, 80, 60)
 
-  ctw = new ColorTypewriter(25, 25, 16)
+  // ctw = new ColorTypewriter(26, 26, 16)
+
+  
 }
 
 void draw(){  
@@ -33,7 +35,7 @@ void draw(){
 }
 
 void keyPressed(){
-    ctw.update(key, keyCode);
-    ctw.draw();
+    // ctw.update(key, keyCode);
+    // ctw.draw();
 }
 

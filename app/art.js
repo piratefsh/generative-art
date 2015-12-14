@@ -2,6 +2,7 @@ import processingSrc from 'file!processing-js/processing.js'
 import main from 'file!./main.pde'
 import RecursiveCircles from 'file!components/RecursiveCircles.pde'
 import Eye from 'file!components/Eye.pde'
+import Tree from 'file!components/Tree.pde'
 import ColorTypewriter from 'file!components/ColorTypewriter.pde'
 
 export default {
@@ -26,7 +27,7 @@ export default {
                 }
             })
 
-            const sources = [main, RecursiveCircles, Eye, ColorTypewriter]
+            const sources = [main, RecursiveCircles, Eye, ColorTypewriter, Tree]
             canvas.setAttribute('data-processing-sources', sources.join(' '))
 
             // reload Processing to catch changes
