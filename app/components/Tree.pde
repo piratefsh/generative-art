@@ -16,19 +16,17 @@ public class Branch{
 
     Branch(p, v, c, w, a, l){
         maxLength = 100;
-        start = p;
         velocity = v;
-
-        prev = new PVector(p.x, p.y); 
-        prev.sub(velocity)
-        end = new PVector(p.x, p.y);
         strokeWidth = w;
-
         branchColor = c;
         branchAlpha = a;
+        level = l;
+
+        start = p;
+        prev = new PVector(p.x, p.y); 
+        end = new PVector(p.x, p.y);
         died = false;
 
-        level = l;
 
         id = lastId++;
     }
@@ -63,8 +61,8 @@ public class Branch{
         int range = Math.abs(start.x - end.x);
 
         PVector random = new PVector(start.x, start.y);
-        random.x = Math.floor(random.x + velocity.x * (Math.random() * range));
-        random.y = Math.floor(random.y + velocity.y * (Math.random() * range));
+        random.x = Math.floor(random.x + velocity.x * (Math.random() * 10 % range));
+        random.y = Math.floor(random.y + velocity.y * (Math.random() * 10 % range));
         return random
     }
 
