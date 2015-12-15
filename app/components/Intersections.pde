@@ -21,19 +21,20 @@ class Intersections{
 
             ss.update();
             ArrayList collisions = new ArrayList();
-
-            if(collisions = this.collision(ss)){
-                console.log();
+            collisions = this.collision(ss);
+            if(collisions.size() > 0){
                 // find intersection points, add mini solar system
                 ss.col = color(255, 100, 100);
-                int[] intersections = ss.intersections(collisions.get(0));
-                PVector pos0 = intersections[0];
-                PVector pos1 = intersections[1];
 
-                // solarSystems.add(newSS)
-                fill(255,0,0);
-                ellipse(pos0.x, pos0.y, 5, 5);
-                ellipse(pos1.x, pos1.y, 5, 5);
+                for (int j = 0; j < collisions.size(); j++){
+                    int[] intersections = ss.intersections(collisions.get(j));
+                    PVector pos0 = intersections[0];
+                    PVector pos1 = intersections[1];
+
+                    fill(255,0,0);
+                    ellipse(pos0.y, pos0.x, 2, 2);
+                    ellipse(pos1.y, pos1.x, 2, 2);
+                }
             }
             else{
                 ss.col = color(180, 180, 180);
@@ -69,7 +70,7 @@ class Intersections{
             }
         }
 
-        return collisions.size() > 0 ? collisions : false;
+        return collisions;
     }
 }
 
@@ -151,7 +152,7 @@ class SolarSystem{
         // draw ss
         pushMatrix();
         translate(this.pos.x, this.pos.y);
-        // rotate(Math.PI - this.rotation);
+        rotate(Math.PI - this.rotation);
 
         ellipseMode(RADIUS);
         strokeWeight(1);
@@ -162,8 +163,8 @@ class SolarSystem{
         // draw planets
         for(int i = 0; i < this.planets.size(); i++){
             Planet p = this.planets.get(i);
-            // rotate(0);
-            // rotate(p.rotation);
+            rotate(0);
+            rotate(p.rotation);
             // p.draw();
         }
 
@@ -173,6 +174,7 @@ class SolarSystem{
 
     // find intersection points with other solar system
     // assume solvable
+    // http://stackoverflow.com/questions/12219802/a-javascript-function-that-returns-the-x-y-points-of-intersection-between-two-ci
     void intersections(SolarSystem other){
         int r0 = this.size;
         int r1 = other.size;
@@ -194,7 +196,7 @@ class SolarSystem{
 
         float h = Math.sqrt((r0 * r0) - (a * a));
 
-        float rx = - dy * (h / dist);
+        float rx = (0 - dy) * (h / dist);
         float ry = dx * (h / dist);
 
         PVector p0 = new PVector((x2 + rx), (y2 + ry));
