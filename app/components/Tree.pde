@@ -150,9 +150,9 @@ public class Tree{
                 float newAlpha = b.branchAlpha < 255? b.branchAlpha + 30 : 255;
 
                 // if(!this.collided(randPt)){
-                // if(b.level > 0){
+                if(b.level > 0){
 
-                if(b.end.dist(b.start) > 1 && b.level > 0){
+                // if(b.end.dist(b.start) > 1 && b.level > 0){
                     Branch newBranch = new Branch(randPt, randVel, 
                         b.branchColor, b.strokeWidth - 0.5 || 1,
                         newAlpha, b.level - 1);
