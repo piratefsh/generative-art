@@ -5,7 +5,7 @@ class Intersections{
     Intersections(numSs){
         solarSystems = new ArrayList();
         ssSize = 80;
-        ssPlanets = 10;
+        ssPlanets = 12;
 
         // create solar systems
         for(int i = 0; i < numSs; i++){
@@ -113,9 +113,9 @@ class SolarSystem{
 
         ellipseMode(RADIUS);
         strokeWeight(1);
-        stroke(180, 180, 180, 180);
+        stroke(180, 180, 180, 100);
         fill(0, 0, 0, 0);
-        // ellipse(0, 0, this.size, this.size);
+        ellipse(0, 0, this.size, this.size);
 
         // draw planets
         for(int i = 0; i < this.planets.size(); i++){
@@ -136,6 +136,9 @@ class Planet{
     color col;
     float rotation;
     float rotationVelocity;
+    int jitter;
+    int maxRadius;
+    int minRadius;
 
     Planet(r, pos){
         this.radius = r;
@@ -143,11 +146,32 @@ class Planet{
         this.rotationVelocity = Math.random() * 0.005;
         this.pos = Util.copyVector(pos);
         this.col = color(255, 255, 255);
+
+        this.jitter = r/2;
+        this.maxRadius = r * 1.5;
+        this.minRadius = r / 2;
     }
 
     void update(){
         // update position
         this.rotation += this.rotationVelocity;
+
+        int randJitter = Math.random() * this.jitter;
+
+        // if too small
+        if(this.radius < this.minRadius){
+            this.radius = this.radius + randJitter;
+        }
+
+        // if too large
+        else if (this.radius > this.maxRadius){
+            this.radius = this.radius - randJitter;
+        }
+        else{
+            randJitter = Math.random() > 0.5? -1 * randJitter: randJitter;
+            this.radius = this.radius + randJitter;
+        }
+
     }
 
     void draw(){
