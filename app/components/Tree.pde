@@ -37,7 +37,7 @@ public class Branch{
         if (!died && end.x > 0 && end.y > 0 
                 && end.x < width && end.y < height
                 && Math.abs(end.x - start.x) < maxLength){
-            // prev.set(end.x, end.y);
+            prev.set(end.x, end.y);
             end.add(velocity);
         }
         else{
@@ -49,7 +49,8 @@ public class Branch{
         stroke(branchColor, branchAlpha);
         strokeWeight(strokeWidth);
         strokeCap(SQUARE);
-        line(start.x, start.y, end.x, end.y);
+        // line(start.x, start.y, end.x, end.y);
+        line(prev.x, prev.y, end.x, end.y);
     }
 
     void die(){
@@ -110,7 +111,7 @@ public class Tree{
         for(int i = 0; i < numBranches; i++){
             PVector randStart = this.randomPoint();
             PVector randVel = this.randomVelocity();
-            Branch branch = new Branch(randStart, randVel, c, 3, 30, numBranches/5);
+            Branch branch = new Branch(randStart, randVel, c, 3, 30, Math.floor(numBranches/(Math.PI+1)));
             branches.add(branch);
         }
     }
@@ -120,10 +121,10 @@ public class Tree{
     }
 
     PVector randomVelocity(PVector except){
-        PVector rand = velocities[Math.floor(Math.random() * velocities.length)];
+        PVector rand = velocities[Math.floor(Math.random() * 10 % velocities.length)];
 
         while(except && rand.dist(except) == 0){
-            rand = velocities[Math.floor(Math.random() * velocities.length)];
+            rand = velocities[Math.floor(Math.random() * 10 % velocities.length)];
         }
         return rand;
     }
@@ -149,7 +150,9 @@ public class Tree{
                 float newAlpha = b.branchAlpha < 255? b.branchAlpha + 30 : 255;
 
                 // if(!this.collided(randPt)){
-                if(b.level > 0){
+                // if(b.level > 0){
+
+                if(b.end.dist(b.start) > 1 && b.level > 0){
                     Branch newBranch = new Branch(randPt, randVel, 
                         b.branchColor, b.strokeWidth - 0.5 || 1,
                         newAlpha, b.level - 1);
@@ -182,12 +185,12 @@ public class Tree{
     }
 
     void draw(){
-        background(bgColor);
+        // background(bgColor);
         for(int i = 0; i < branches.size(); i++){
             Branch b = (Branch) branches.get(i);
-            // if(!b.died){
+            if(!b.died){
                 b.draw();
-            // }
+            }
         }
     }
 }
