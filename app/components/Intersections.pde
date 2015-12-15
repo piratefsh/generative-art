@@ -5,7 +5,7 @@ class Intersections{
     Intersections(numSs){
         solarSystems = new ArrayList();
         ssSize = 80;
-        ssPlanets = 12;
+        ssPlanets = 18;
 
         // create solar systems
         for(int i = 0; i < numSs; i++){
@@ -48,12 +48,12 @@ class SolarSystem{
         this.rotationVelocity = 0.001;
         this.rotation = 0;
 
-        int minPlanetSz = 1;
-        int maxPlanetSz = 3;
+        int minPlanetSz = 0.5;
+        int maxPlanetSz = 2;
 
         // create planets at random points on solar system
         for(int i = 0; i < numPlanets; i++){
-            int r = Math.floor(Math.random() * (maxPlanetSz - minPlanetSz) + minPlanetSz);
+            int r = Math.floor(Math.random() * (maxPlanetSz - minPlanetSz)) + minPlanetSz;
             PVector pt = this.randomPoint();
             this.planets.add(new Planet(r, pt));
         }
@@ -115,7 +115,7 @@ class SolarSystem{
         strokeWeight(1);
         stroke(180, 180, 180, 100);
         fill(0, 0, 0, 0);
-        ellipse(0, 0, this.size, this.size);
+        // ellipse(0, 0, this.size, this.size);
 
         // draw planets
         for(int i = 0; i < this.planets.size(); i++){
@@ -143,7 +143,7 @@ class Planet{
     Planet(r, pos){
         this.radius = r;
         this.rotation = 0;
-        this.rotationVelocity = Math.random() * 0.005;
+        this.rotationVelocity = Math.random() * 0.003;
         this.pos = Util.copyVector(pos);
         this.col = color(255, 255, 255);
 
