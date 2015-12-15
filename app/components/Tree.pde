@@ -12,18 +12,23 @@ public class Branch{
     int strokeWidth;
     int id;
     int maxLength;
+    int level;
 
-    Branch(p, v, c, w, a){
+    Branch(p, v, c, w, a, l){
         maxLength = 100;
         start = p;
-        prev = new PVector(p.x, p.y); 
-        end = new PVector(p.x, p.y);
         velocity = v;
+
+        prev = new PVector(p.x, p.y); 
+        prev.sub(velocity)
+        end = new PVector(p.x, p.y);
         strokeWidth = w;
 
         branchColor = c;
         branchAlpha = a;
         died = false;
+
+        level = l;
 
         id = lastId++;
     }
@@ -32,7 +37,7 @@ public class Branch{
         if (!died && end.x > 0 && end.y > 0 
                 && end.x < width && end.y < height
                 && Math.abs(end.x - start.x) < maxLength){
-            prev.set(end.x, end.y);
+            // prev.set(end.x, end.y);
             end.add(velocity);
         }
         else{
@@ -44,7 +49,7 @@ public class Branch{
         stroke(branchColor, branchAlpha);
         strokeWeight(strokeWidth);
         strokeCap(SQUARE);
-        line(prev.x, prev.y, end.x, end.y);
+        line(start.x, start.y, end.x, end.y);
     }
 
     void die(){
@@ -83,25 +88,29 @@ public class Branch{
 }
 
 public class Tree{
-    static PVector velocities = [new PVector(1, 1), new PVector(1, -1), new PVector(-1, 1), new PVector(-1, -1)];
-    static color colors = [color(255, 100, 100), color(100, 150, 150), color(150, 100, 200), color(150, 150, 50)];
+    static PVector velocities = [new PVector(1, 1), new PVector(1, -1), 
+        new PVector(-1, 1), new PVector(-1, -1)];
+    static color colors = [color(255, 100, 100), color(100, 150, 150), 
+        color(150, 100, 200), color(150, 150, 50)];
+
     ArrayList branches;
-    int numBranches;
     color bgColor;
+    int numBranches;
 
 
     Tree(n){
         bgColor = color(250, 250, 250);
-        background(bgColor);
         numBranches = n;
         branches = new ArrayList();
+
+        background(bgColor);
         color c = this.randomColor();
 
         // generate random starting branches
         for(int i = 0; i < numBranches; i++){
             PVector randStart = this.randomPoint();
             PVector randVel = this.randomVelocity();
-            Branch branch = new Branch(randStart, randVel, c, 3, 30);
+            Branch branch = new Branch(randStart, randVel, c, 3, 30, numBranches/5);
             branches.add(branch);
         }
     }
@@ -132,21 +141,27 @@ public class Tree{
 
             // if grown into another branch, kill branch
             // and spawn new one on random point parallel to old branch
-            if(!b.died && pixels[b.end.y * width + b.end.x] != bgColor){
+            if(!b.died && this.collided(b.end)){
                 b.die();
-                branches.remove(i);
-
+                // branches.remove(i);
+                PVector randPt = b.randomPoint();
+                PVector randVel = this.randomVelocity(b.velocity);
                 float newAlpha = b.branchAlpha < 255? b.branchAlpha + 30 : 255;
 
-                if(branches.size() < 100){
-                    Branch newBranch = new Branch(b.randomPoint(), this.randomVelocity(b.velocity), 
+                // if(!this.collided(randPt)){
+                if(b.level > 0){
+                    Branch newBranch = new Branch(randPt, randVel, 
                         b.branchColor, b.strokeWidth - 0.5 || 1,
-                        newAlpha);
+                        newAlpha, b.level - 1);
                     branches.add(newBranch);
                 }
             }
         }
 
+    }
+
+    void collided(PVector pt){
+        return pixels[pt.y * width + pt.x] != bgColor
     }
 
     void collidedWith(branch){
@@ -167,9 +182,12 @@ public class Tree{
     }
 
     void draw(){
+        background(bgColor);
         for(int i = 0; i < branches.size(); i++){
             Branch b = (Branch) branches.get(i);
-            b.draw();
+            // if(!b.died){
+                b.draw();
+            // }
         }
     }
 }
