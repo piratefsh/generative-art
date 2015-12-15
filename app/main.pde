@@ -7,6 +7,7 @@ void setup()
   size(width, height);
   background(250);
   inters = new Intersections(10);
+  frameRate(50);
 }
 
 void draw(){  

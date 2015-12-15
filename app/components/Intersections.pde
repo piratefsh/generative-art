@@ -4,8 +4,8 @@ class Intersections{
 
     Intersections(numSs){
         solarSystems = new ArrayList();
-        ssSize = 40;
-        ssPlanets = 20;
+        ssSize = 80;
+        ssPlanets = 10;
 
         // create solar systems
         for(int i = 0; i < numSs; i++){
@@ -22,7 +22,8 @@ class Intersections{
     }
 
     void draw(){
-        background(0);
+        fill(0, 120);
+        rect(0, 0, width, height);
         // draw solar systems
         for(int i = 0; i < solarSystems.size(); i++){
             SolarSystem ss = solarSystems.get(i);
@@ -44,28 +45,28 @@ class SolarSystem{
         this.planets = new ArrayList();
 
         this.velocity = Util.randomVelocity();
-        this.rotationVelocity = 0.01;
+        this.rotationVelocity = 0.001;
         this.rotation = 0;
 
         int minPlanetSz = 1;
-        int maxPlanetSz = 6;
+        int maxPlanetSz = 3;
 
         // create planets at random points on solar system
         for(int i = 0; i < numPlanets; i++){
             int r = Math.floor(Math.random() * (maxPlanetSz - minPlanetSz) + minPlanetSz);
             PVector pt = this.randomPoint();
-            pt.sub(this.pos);
             this.planets.add(new Planet(r, pt));
         }
 
     }
 
+    // get point relative to circle center
     PVector pointAt(int x, boolean sign){
         int r = this.size;
         // (y - k)**2 = r**2 - (x - h)**2
 
         // a = r**2 - (x - h)**2
-        float a = r*r - Math.pow(x - pos.x, 2);
+        float a = r*r - Math.pow(x, 2);
 
         // b = sqrt(a), either pos or neg
         float b = Math.floor(Math.sqrt(a));
@@ -73,7 +74,7 @@ class SolarSystem{
         b = sign ? b : b * -1;
 
         // y = b + k
-        int y = b + this.pos.y;
+        int y = b;
 
         PVector p = new PVector(x, y);
         return p;
@@ -82,7 +83,7 @@ class SolarSystem{
     PVector randomPoint(){
         int r = this.size;
         // random x
-        int x = this.pos.x - r + Math.floor((Math.random() * 2 * r));
+        int x = 0 - r + Math.floor((Math.random() * 2 * r));
         return this.pointAt(x,  Math.random() < 0.5)
     }
 
@@ -91,29 +92,36 @@ class SolarSystem{
         this.pos.add(this.velocity);
 
         if (this.pos.x < 0 || this.pos.x > width){
-            this.velocity.x *= -1
+            this.pos.x  = (this.pos.x + width) % width;
         }
         else if (this.pos.y < 0 || this.pos.y > height){
-            this.velocity.y *= -1
+            this.pos.y  = (this.pos.y + height) % height;
+        }
+
+        // update planets
+        for(int i = 0; i < this.planets.size(); i++){
+            Planet p = this.planets.get(i);
+            p.update();
         }
     }
 
     void draw(){
         // draw ss
-
         pushMatrix();
         translate(this.pos.x, this.pos.y);
-        rotate(this.rotation);
+        rotate(Math.PI - this.rotation);
 
         ellipseMode(RADIUS);
         strokeWeight(1);
         stroke(180, 180, 180, 180);
         fill(0, 0, 0, 0);
-        ellipse(0, 0, this.size, this.size);
+        // ellipse(0, 0, this.size, this.size);
 
         // draw planets
         for(int i = 0; i < this.planets.size(); i++){
             Planet p = this.planets.get(i);
+            rotate(0);
+            rotate(p.rotation);
             p.draw();
         }
 
@@ -126,16 +134,20 @@ class Planet{
     int radius;
     PVector pos;
     color col;
+    float rotation;
+    float rotationVelocity;
 
     Planet(r, pos){
         this.radius = r;
+        this.rotation = 0;
+        this.rotationVelocity = Math.random() * 0.005;
         this.pos = Util.copyVector(pos);
         this.col = color(255, 255, 255);
     }
 
-    void update(pos){
+    void update(){
         // update position
-        this.pos.set(pos.x, pos.y, pos.z);
+        this.rotation += this.rotationVelocity;
     }
 
     void draw(){
@@ -145,7 +157,7 @@ class Planet{
         translate(this.pos.x, this.pos.y);
         ellipseMode(RADIUS);
         fill(this.col);
-        stroke(this.col, 200);
+        stroke(this.col, 160);
         strokeWeight(this.radius/2);
         ellipse(0, 0, this.radius, this.radius);
 

@@ -18,9 +18,6 @@ class Util{
     static PVector randomVelocity(){
         int i = Math.floor(Math.random() * 10 % velocities.length);
         PVector v = Util.copyVector(Util.velocities[i]);
-
-        v.x += Math.random() * 10 % 2;
-        v.y += Math.random() * 10 % 2;
         return v;
     }
 }
