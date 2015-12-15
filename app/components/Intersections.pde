@@ -32,8 +32,8 @@ class Intersections{
                     PVector pos1 = intersections[1];
 
                     fill(255,0,0);
-                    ellipse(pos0.y, pos0.x, 2, 2);
-                    ellipse(pos1.y, pos1.x, 2, 2);
+                    ellipse(pos0.x, pos0.y, 2, 2);
+                    ellipse(pos1.x, pos1.y, 2, 2);
                 }
             }
             else{
@@ -188,19 +188,24 @@ class SolarSystem{
         int dx = x1 - x0;
         int dy = y1 - y0;
 
-        float dist = Math.sqrt(dy * dy + dx * dx);
-        float a = ((r0 * r0) - (r1 * r1) + (dist * dist)) / (2.0 * dist);
+        float d = this.pos.dist(other.pos);
 
-        float x2 = x0 + (dy * a / dist);
-        float y2 = y0 + (dx * a / dist);
+        float a = (r0*r0 - r1*r1 + d*d ) / (2*d);
 
-        float h = Math.sqrt((r0 * r0) - (a * a));
+        float p2x = x0 + a*(x1 - x0)/d;
+        float p2y = y0 + a*(y1 - y0)/d;
 
-        float rx = (0 - dy) * (h / dist);
-        float ry = dx * (h / dist);
+        float h = sqrt(r0*r0 - a*a);
 
-        PVector p0 = new PVector((x2 + rx), (y2 + ry));
-        PVector p1 = new PVector((x2 - rx), (y2 - ry));
+        float p3ax = p2x + h*(y1 - y0)/d;
+        float p3ay = p2y - h*(x1 - x0)/d;
+
+        float p3bx = p2x - h*(y1 - y0)/d;
+        float p3by = p2y + h*(x1 - x0)/d;
+
+        // P3a and P3B may be identical - ignore this case (for now)
+        PVector p0 = new PVector(p3ax, p3ay);
+        PVector p1 = new PVector(p3bx,p3by);
 
         int[] res = [p0, p1];
 
