@@ -33,7 +33,7 @@ void draw(){
 
   // e1.display()
   // e2.display()
-  background(250);
+  // background(250);
   tree.update()
   tree.draw()
 }

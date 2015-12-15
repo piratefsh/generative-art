@@ -4,6 +4,7 @@ public class Branch{
 
     PVector start;
     PVector end;
+    PVector prev;
     PVector velocity;
     color branchColor;
     float branchAlpha;
@@ -13,8 +14,10 @@ public class Branch{
     int maxLength;
 
     Branch(p, v, c, w, a){
-        maxLength = 200;
+        maxLength = 1000;
+        p.set(Math.floor(p.x), Math.floor(p.y))
         start = p;
+        prev = new PVector(p.x, p.y); 
         end = new PVector(p.x, p.y);
         velocity = v;
         strokeWidth = w;
@@ -30,6 +33,7 @@ public class Branch{
         if (!died && end.x > 0 && end.y > 0 
                 && end.x < width && end.y < height
                 && Math.abs(end.x - start.x) < maxLength){
+            prev.set(end.x, end.y);
             end.add(velocity);
         }
         else{
@@ -40,7 +44,8 @@ public class Branch{
     void draw(){
         stroke(branchColor, branchAlpha);
         strokeWeight(strokeWidth);
-        line(start.x, start.y, end.x, end.y);
+        strokeCap(SQUARE);
+        line(prev.x, prev.y, end.x, end.y);
     }
 
     void die(){
@@ -83,8 +88,12 @@ public class Tree{
     static color colors = [color(255, 100, 100), color(100, 150, 150), color(150, 100, 200), color(150, 150, 50)];
     ArrayList branches;
     int numBranches;
+    color bgColor;
+
 
     Tree(n){
+        bgColor = color(250, 250, 250);
+        background(bgColor);
         numBranches = n;
         branches = new ArrayList();
         color c = this.randomColor();
@@ -116,6 +125,7 @@ public class Tree{
     }
 
     void update(){
+        loadPixels();
         for(int i = 0; i < branches.size(); i++){
             Branch b = (Branch) branches.get(i);
 
@@ -123,15 +133,18 @@ public class Tree{
 
             // if grown into another branch, kill branch
             // and spawn new one on random point parallel to old branch
-            if(!b.died && this.collidedWith(b)){
+            if(!b.died && pixels[b.end.y * width + b.end.x] != bgColor){
                 b.die();
+                branches.remove(i);
 
                 float newAlpha = b.branchAlpha < 255? b.branchAlpha + 30 : 255;
 
-                Branch newBranch = new Branch(b.randomPoint(), this.randomVelocity(b.velocity), 
-                    b.branchColor, b.strokeWidth - 0.5 || 1,
-                    newAlpha);
-                branches.add(newBranch);
+                if(branches.size() < 100){
+                    Branch newBranch = new Branch(b.randomPoint(), this.randomVelocity(b.velocity), 
+                        b.branchColor, b.strokeWidth - 0.5 || 1,
+                        newAlpha);
+                    branches.add(newBranch);
+                }
             }
         }
 
