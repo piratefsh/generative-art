@@ -14,8 +14,7 @@ public class Branch{
     int maxLength;
 
     Branch(p, v, c, w, a){
-        maxLength = 1000;
-        p.set(Math.floor(p.x), Math.floor(p.y))
+        maxLength = 100;
         start = p;
         prev = new PVector(p.x, p.y); 
         end = new PVector(p.x, p.y);

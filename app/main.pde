@@ -1,8 +1,8 @@
 import RecursiveCircles;
 import Eye;
 
-int width = window.innerWidth;
-int height = window.innerHeight;
+int width = window.innerWidth/2;
+int height = window.innerHeight/2;
 // RecursiveCircles rc;
 // Eye e1, e2;
 // ColorTypewriter ctw;
