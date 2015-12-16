@@ -13,10 +13,10 @@ class Intersections{
         roguePlanets = new ArrayList();
 
         minSsSize = 10;
-        ssSize = 80;
+        ssSize = 120;
         
         minSsPlanets = 5;
-        ssPlanets = 15;
+        ssPlanets = 30;
 
         // create solar systems
         for(int i = 0; i < numSs; i++){
@@ -185,7 +185,7 @@ class SolarSystem{
         int r = this.actualSize;
         // random x
         int x = 0 - r + Math.floor((Math.random() * 2 * r));
-        return this.pointAt(x, r, Math.random() < 0.5)
+        return this.pointAt(x, this.size, Math.random() < 0.5)
     }
 
     void update(){
@@ -220,7 +220,7 @@ class SolarSystem{
         stroke(this.col, 100);
         fill(255, 255, 255, 10);
         // ellipse(0, 0, this.size, this.size);
-        scale(1);
+
         // draw planets
         for(int i = 0; i < this.planets.size(); i++){
             Planet p = this.planets.get(i);

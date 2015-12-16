@@ -8,7 +8,7 @@ void setup()
   background(250);
 
   hint(ENABLE_OPENGL_4X_SMOOTH);
-  inters = new Intersections(50);
+  inters = new Intersections(20);
 }
 
 void draw(){  
