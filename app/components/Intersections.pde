@@ -4,8 +4,9 @@ class Intersections{
 
     Intersections(numSs){
         solarSystems = new ArrayList();
+        roguePlanets = new ArrayList();
         ssSize = 80;
-        ssPlanets = 15;
+        ssPlanets = 12;
 
         // create solar systems
         for(int i = 0; i < numSs; i++){
@@ -16,40 +17,70 @@ class Intersections{
     }
 
     void update(){
+        console.log(roguePlanets.size());
+        for(int i = 0; i < roguePlanets.size(); i++){
+            Planet p = roguePlanets.get(i);
+
+            // update planet
+            p.update();
+
+            // remove dead rogue planets
+            if (p.dead){
+                roguePlanets.remove(p);
+            }
+        }
+
         for(int i = 0; i < solarSystems.size(); i++){
             SolarSystem ss = solarSystems.get(i);
 
+            //update solar system
             ss.update();
+
+
+            // find other ss it collides with
             ArrayList collisions = new ArrayList();
             collisions = this.collision(ss);
+
+            // if there are collisions,
             if(collisions.size() > 0){
-                // find intersection points, add mini solar system
+
+                // find intersection points, add rogue planets for each ss collision
                 ss.col = color(255, 255, 255);
 
                 for (int j = 0; j < collisions.size(); j++){
+                    // for two points of collision
                     int[] intersections = ss.intersections(collisions.get(j));
                     PVector pos0 = intersections[0];
                     PVector pos1 = intersections[1];
 
-                    fill(255,255,255, 200);
                     int intSize = 3;
-                    ellipse(pos0.x, pos0.y, intSize, intSize);
-                    ellipse(pos1.x, pos1.y, intSize, intSize);
+                    int lifespan = 100;
+
+                    Planet p1 = new Planet(intSize, pos0, lifespan);
+                    Planet p2 = new Planet(intSize, pos1, lifespan);
+
+                    roguePlanets.add(p1);
+                    roguePlanets.add(p2);
                 }
-            }
-            else{
-                ss.col = color(180, 180, 180);
             }
         }
     }
 
     void draw(){
+        // fade out prev frame
         fill(0, 130);
         rect(0, 0, width, height);
+
         // draw solar systems
         for(int i = 0; i < solarSystems.size(); i++){
             SolarSystem ss = solarSystems.get(i);
             ss.draw();
+        }
+
+        // draw rogue planets
+        for(int i = 0; i < roguePlanets.size(); i++){
+            Planet p = roguePlanets.get(i);
+            p.draw();
         }
     }
 
@@ -97,9 +128,9 @@ class SolarSystem{
 
         // create planets at random points on solar system
         for(int i = 0; i < numPlanets; i++){
-            int r = Math.floor(Math.random() * (maxPlanetSz - minPlanetSz)) + minPlanetSz;
+            int r = Math.floor(Math.random() * 10 % (maxPlanetSz - minPlanetSz)) + minPlanetSz;
             PVector pt = this.randomPoint();
-            this.planets.add(new Planet(r, pt));
+            this.planets.add(new Planet(r, pt, null));
         }
 
     }
@@ -224,16 +255,30 @@ class Planet{
     int maxRadius;
     int minRadius;
 
-    Planet(r, pos){
+    float startTime;
+    int lifespan;
+    int lifeRemaining;
+    boolean dead;
+
+    Planet(r, pos, lifespan){
         this.radius = r;
         this.rotation = 0;
-        this.rotationVelocity = Math.random() * 0.003;
+        this.rotationVelocity = Math.random() * 0.004;
         this.pos = Util.copyVector(pos);
         this.col = color(255, 255, 255);
 
         this.jitter = r/2;
         this.maxRadius = r * 1.5;
         this.minRadius = r / 2;
+
+        this.lifespan = lifespan;
+
+        if(this.lifespan){
+            this.lifeRemaining = this.lifespan;
+            this.startTime = Date.now();
+        }
+
+        this.dead = false;
     }
 
     void update(){
@@ -241,6 +286,25 @@ class Planet{
         this.rotation += this.rotationVelocity;
 
         int randJitter = Math.random() * this.jitter;
+
+        // if have lifespan, scale accordingly
+        if(this.lifespan){
+            float lifeRemaining = this.lifespan - (Date.now() - this.startTime);
+            if(lifeRemaining > 0){
+                // update radius
+                this.radius = this.radius * (lifeRemaining / this.lifespan);
+
+                // update jitter sizes
+                this.jitter = this.radius/2;
+                this.maxRadius = this.radius * 1.5;
+                this.minRadius = this.radius / 2;
+                randJitter = Math.random() * this.jitter;
+                this.resize = this.resize ? this.resize + 1 : 0;
+            }
+            else{
+                this.dead = true;
+            }
+        }
 
         // if too small
         if(this.radius < this.minRadius){

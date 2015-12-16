@@ -6,8 +6,8 @@ void setup()
 {
   size(width, height);
   background(250);
-  inters = new Intersections(40);
-  frameRate(50);
+  inters = new Intersections(10);
+  frameRate(40);
 }
 
 void draw(){  
