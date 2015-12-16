@@ -126,6 +126,7 @@ class Intersections{
 
 class SolarSystem{
     int size;
+    int maxSize;
     ArrayList planets;
     PVector velocity;
     PVector pos;
@@ -137,7 +138,9 @@ class SolarSystem{
 
     SolarSystem(size, numPlanets){
         this.pos = Util.randomPoint();
-        this.size = size;
+        this.actualSize = size;
+        this.scale = 0.1;
+        this.size = size * this.scale;
         this.planets = new ArrayList();
 
         this.velocity = Util.randomVelocity();
@@ -180,13 +183,16 @@ class SolarSystem{
     }
 
     PVector randomPoint(){
-        int r = this.size;
+        int r = this.actualSize;
         // random x
         int x = 0 - r + Math.floor((Math.random() * 2 * r));
         return this.pointAt(x,  Math.random() < 0.5)
     }
 
     void update(){
+        this.scale = this.scale < 1? this.scale + 0.01 : this.scale;
+        this.size = Math.floor(this.actualSize * this.scale);
+
         this.rotation += this.rotationVelocity;
         this.pos.add(this.velocity);
 
@@ -209,12 +215,12 @@ class SolarSystem{
         pushMatrix();
         translate(this.pos.x, this.pos.y);
         rotate(Math.PI - this.rotation);
-
+        scale(this.scale);
         ellipseMode(RADIUS);
-        strokeWeight(1);
+        strokeWeight(0);
         stroke(this.col, 100);
-        fill(0, 0, 0, 0);
-        // ellipse(0, 0, this.size, this.size);
+        fill(255, 255, 255, 10);
+        ellipse(0, 0, this.size, this.size);
 
         // draw planets
         for(int i = 0; i < this.planets.size(); i++){
