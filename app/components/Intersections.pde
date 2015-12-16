@@ -17,7 +17,7 @@ class Intersections{
     }
 
     void update(){
-        console.log(roguePlanets.size());
+        // console.log(roguePlanets.size());
         for(int i = 0; i < roguePlanets.size(); i++){
             Planet p = roguePlanets.get(i);
 
@@ -35,7 +35,7 @@ class Intersections{
 
             //update solar system
             ss.update();
-
+            ss.collidingWith = new ArrayList();
 
             // find other ss it collides with
             ArrayList collisions = new ArrayList();
@@ -48,8 +48,14 @@ class Intersections{
                 ss.col = color(255, 255, 255);
 
                 for (int j = 0; j < collisions.size(); j++){
+
                     // for two points of collision
-                    int[] intersections = ss.intersections(collisions.get(j));
+                    SolarSystem other = collisions.get(j);
+
+                    // if already colliding, don't calc, is duplicate
+                    if(other.collidingWith.contains(ss)) continue;
+
+                    int[] intersections = ss.intersections(other);
                     PVector pos0 = intersections[0];
                     PVector pos1 = intersections[1];
 
@@ -58,9 +64,13 @@ class Intersections{
 
                     Planet p1 = new Planet(intSize, pos0, lifespan);
                     Planet p2 = new Planet(intSize, pos1, lifespan);
-
+                    p1.col = color(255, 100, 100);
+                    p2.col = color(255, 100, 100);
                     roguePlanets.add(p1);
                     roguePlanets.add(p2);
+
+                    ss.collidingWith.add(other);
+                    other.collidingWith.add(ss);
                 }
             }
         }
@@ -113,6 +123,10 @@ class SolarSystem{
     PVector pos;
     float rotation;
     color col; 
+
+    //other solar systems it is currently colliding with
+    ArrayList collidingWith; 
+
     SolarSystem(size, numPlanets){
         this.pos = Util.randomPoint();
         this.size = size;
@@ -125,6 +139,8 @@ class SolarSystem{
 
         int minPlanetSz = 0.5;
         int maxPlanetSz = 2;
+
+        this.collidingWith = new ArrayList();
 
         // create planets at random points on solar system
         for(int i = 0; i < numPlanets; i++){
