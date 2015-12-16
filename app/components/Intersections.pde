@@ -163,8 +163,7 @@ class SolarSystem{
     }
 
     // get point relative to circle center
-    PVector pointAt(int x, boolean sign){
-        int r = this.size;
+    PVector pointAt(int x, int r, boolean sign){
         // (y - k)**2 = r**2 - (x - h)**2
 
         // a = r**2 - (x - h)**2
@@ -186,7 +185,7 @@ class SolarSystem{
         int r = this.actualSize;
         // random x
         int x = 0 - r + Math.floor((Math.random() * 2 * r));
-        return this.pointAt(x,  Math.random() < 0.5)
+        return this.pointAt(x, r, Math.random() < 0.5)
     }
 
     void update(){
@@ -220,8 +219,8 @@ class SolarSystem{
         strokeWeight(0);
         stroke(this.col, 100);
         fill(255, 255, 255, 10);
-        ellipse(0, 0, this.size, this.size);
-
+        // ellipse(0, 0, this.size, this.size);
+        scale(1);
         // draw planets
         for(int i = 0; i < this.planets.size(); i++){
             Planet p = this.planets.get(i);
