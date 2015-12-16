@@ -1,23 +1,33 @@
 class Intersections{
     ArrayList solarSystems;
+    ArrayList roguePlanets;
     int ssSize;
+    int ssPlanets;
+    int minSsPlanets;
+    int minSsSize;
+
 
     Intersections(numSs){
+        console.log('init');
         solarSystems = new ArrayList();
         roguePlanets = new ArrayList();
+
+        minSsSize = 10;
         ssSize = 80;
-        ssPlanets = 12;
+        
+        minSsPlanets = 5;
+        ssPlanets = 15;
 
         // create solar systems
         for(int i = 0; i < numSs; i++){
-            int randSize = Math.floor(Math.random() * (ssSize - 10)) + 10;
-            SolarSystem ss = new SolarSystem(randSize, ssPlanets);
+            int randSize = Math.floor(Math.random() * (ssSize - minSsSize)) + minSsSize;
+            int numPlanets = Math.floor(randSize / ssSize * ssPlanets) + minSsPlanets;
+            SolarSystem ss = new SolarSystem(randSize, numPlanets);
             solarSystems.add(ss);
         }
     }
 
     void update(){
-        // console.log(roguePlanets.size());
         for(int i = 0; i < roguePlanets.size(); i++){
             Planet p = roguePlanets.get(i);
 
@@ -26,7 +36,7 @@ class Intersections{
 
             // remove dead rogue planets
             if (p.dead){
-                roguePlanets.remove(p);
+                roguePlanets.remove(i);
             }
         }
 
@@ -45,7 +55,6 @@ class Intersections{
             if(collisions.size() > 0){
 
                 // find intersection points, add rogue planets for each ss collision
-                ss.col = color(255, 255, 255);
 
                 for (int j = 0; j < collisions.size(); j++){
 
@@ -59,13 +68,12 @@ class Intersections{
                     PVector pos0 = intersections[0];
                     PVector pos1 = intersections[1];
 
-                    int intSize = 3;
-                    int lifespan = 100;
+                    int intSize = Math.random() * (3 - 2) + 2;
+                    int lifespan = 150;
 
                     Planet p1 = new Planet(intSize, pos0, lifespan);
                     Planet p2 = new Planet(intSize, pos1, lifespan);
-                    p1.col = color(255, 100, 100);
-                    p2.col = color(255, 100, 100);
+
                     roguePlanets.add(p1);
                     roguePlanets.add(p2);
 

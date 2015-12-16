@@ -6,8 +6,9 @@ void setup()
 {
   size(width, height);
   background(250);
-  inters = new Intersections(10);
-  frameRate(40);
+
+  hint(ENABLE_OPENGL_4X_SMOOTH);
+  inters = new Intersections(50);
 }
 
 void draw(){  
