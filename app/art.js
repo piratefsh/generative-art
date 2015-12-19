@@ -1,6 +1,6 @@
 import processingSrc from 'file!processing-js/processing.js'
 import main from 'file!./main.pde'
-import Intersections from 'file!components/Intersections.pde'
+import Shell from 'file!components/Shell.pde'
 import Util from 'file!components/Util.pde'
 
 export default {
@@ -25,7 +25,7 @@ export default {
                 }
             })
 
-            const sources = [main, Intersections, Util]
+            const sources = [main, Shell, Util];
             canvas.setAttribute('data-processing-sources', sources.join(' '))
 
             // reload Processing to catch changes

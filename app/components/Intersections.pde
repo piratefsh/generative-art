@@ -86,7 +86,7 @@ class Intersections{
 
     void draw(){
         // fade out prev frame
-        fill(0, 130);
+        fill(0, 120);
         rect(0, 0, width, height);
 
         // draw solar systems
