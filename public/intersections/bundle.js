@@ -59,7 +59,7 @@
 
 	var _art2 = _interopRequireDefault(_art);
 
-	__webpack_require__(10);
+	__webpack_require__(8);
 
 	_art2['default'].init();
 
@@ -97,21 +97,13 @@
 
 	var _fileMainPde2 = _interopRequireDefault(_fileMainPde);
 
-	var _fileComponentsRecursiveCirclesPde = __webpack_require__(6);
+	var _fileComponentsIntersectionsPde = __webpack_require__(6);
 
-	var _fileComponentsRecursiveCirclesPde2 = _interopRequireDefault(_fileComponentsRecursiveCirclesPde);
+	var _fileComponentsIntersectionsPde2 = _interopRequireDefault(_fileComponentsIntersectionsPde);
 
-	var _fileComponentsEyePde = __webpack_require__(7);
+	var _fileComponentsUtilPde = __webpack_require__(7);
 
-	var _fileComponentsEyePde2 = _interopRequireDefault(_fileComponentsEyePde);
-
-	var _fileComponentsTreePde = __webpack_require__(8);
-
-	var _fileComponentsTreePde2 = _interopRequireDefault(_fileComponentsTreePde);
-
-	var _fileComponentsColorTypewriterPde = __webpack_require__(9);
-
-	var _fileComponentsColorTypewriterPde2 = _interopRequireDefault(_fileComponentsColorTypewriterPde);
+	var _fileComponentsUtilPde2 = _interopRequireDefault(_fileComponentsUtilPde);
 
 	exports['default'] = {
 	    init: function init() {
@@ -135,7 +127,7 @@
 	                }
 	            });
 
-	            var sources = [_fileMainPde2['default'], _fileComponentsRecursiveCirclesPde2['default'], _fileComponentsEyePde2['default'], _fileComponentsColorTypewriterPde2['default'], _fileComponentsTreePde2['default']];
+	            var sources = [_fileMainPde2['default'], _fileComponentsIntersectionsPde2['default'], _fileComponentsUtilPde2['default']];
 	            canvas.setAttribute('data-processing-sources', sources.join(' '));
 
 	            // reload Processing to catch changes
@@ -157,34 +149,22 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "f6125ca94388ca5d972b7fda3a410df5.pde";
+	module.exports = __webpack_require__.p + "36375207cab4474fe3e8f1e6075c9fd0.pde";
 
 /***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "4e50ab47b16ceb8044a3adaec67f5f38.pde";
+	module.exports = __webpack_require__.p + "5615b519a0bf9b2f50d663535381f788.pde";
 
 /***/ },
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "fe330e31d73f1f321180c708f3b629ab.pde";
+	module.exports = __webpack_require__.p + "5d4ec6f8d7d1150f2ff9aaa384704322.pde";
 
 /***/ },
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "d5b3659748f167558308468875e9015d.pde";
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "a433f2f33f5bba49a26c4297b46728fc.pde";
-
-/***/ },
-/* 10 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
