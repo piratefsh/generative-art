@@ -9,7 +9,7 @@ class Util{
         return new PVector(p.x, p.y, p.z);
     }
 
-    static PVector randomPoint(){
+    static PVector randomPoint(min, max){
         int x = Math.floor(Math.random() * width);
         int y = Math.floor(Math.random() * height);
         return new PVector(x, y);
@@ -19,5 +19,10 @@ class Util{
         int i = Math.floor(Math.random() * 10 % velocities.length);
         PVector v = Util.copyVector(Util.velocities[i]);
         return v;
+    }
+
+    static float random(float min, float max, boolean floor){
+        float n = Math.random() * (max - min) + min;
+        return floor ? Math.floor(n) : n;
     }
 }
