@@ -1,6 +1,11 @@
-# Webpack Starter
-Simple directory and config setup for a Webpack project with front-end web only. 
+# Generative art with Processing.js
+Experiments with generative art.
 
+## Demos
+1. [Crystaline](http://piratefsh.github.io/generative-art/public/trees/)
+2. [Intersections](http://piratefsh.github.io/generative-art/public/intersections/)
+3. [Color typewriter](http://piratefsh.github.io/generative-art/public/typewriter/). Not quite generative art, but fun. 
+ 
 ## Development 
 ### Install
 ```
