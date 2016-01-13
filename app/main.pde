@@ -1,6 +1,6 @@
 int width = Math.floor(window.innerWidth);
 int height = Math.floor(window.innerHeight);
-Intersections inters;
+Shell shell;
 
 void setup()
 {
@@ -8,11 +8,11 @@ void setup()
   background(250);
 
   hint(ENABLE_OPENGL_4X_SMOOTH);
-  inters = new Intersections(17);
+  shell = new Shell();
 }
 
 void draw(){  
-  inters.update();
-  inters.draw();
+  shell.update();
+  shell.draw();
 }
 
