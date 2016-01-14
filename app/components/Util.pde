@@ -9,9 +9,13 @@ class Util{
         return new PVector(p.x, p.y, p.z);
     }
 
-    static PVector randomPoint(min, max){
-        int x = Math.floor(Math.random() * width);
-        int y = Math.floor(Math.random() * height);
+    static PVector randomPoint(minw, maxw, minh, maxh){
+        minw = minw || 0;
+        minh = minh || 0;
+        maxw = maxw || width;
+        maxh = maxh || height;
+        int x = Util.random(minw, maxw, true);
+        int y = Util.random(minh, maxh, true);
         return new PVector(x, y);
     }
 
