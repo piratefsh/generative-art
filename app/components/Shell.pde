@@ -13,6 +13,9 @@ class Shell{
 
     PVector startVelocity;
     PVector endVelocity;
+    PVector startTargetVelocity;
+    PVector endTargetVelocity;
+    PVector acceleration;
 
     Shell(){
         this.points = new ArrayList();
@@ -30,6 +33,12 @@ class Shell{
 
         startVelocity = Util.randomVelocity();
         endVelocity = Util.randomVelocity();
+
+        startTargetVelocity = startVelocity;
+        endTargetVelocity = endVelocity;
+
+        acceleration = Util.randomVelocity();
+        acceleration.div(10);
     }
 
     void update(){
@@ -55,12 +64,27 @@ class Shell{
         this.bControlEnd.sub(this.aControlStart);
         this.aStart = this.bEnd;
 
+        this.accelerate(this.startVelocity, this.startTargetVelocity, this.acceleration, 1);
+        this.accelerate(this.endVelocity, this.endTargetVelocity, this.acceleration, 1);
+        console.log(this.startVelocity);
+        // change direction randomly
         if(Math.random() > 0.98){
-            this.startVelocity = Util.randomVelocity();
+            this.startTargetVelocity = Util.randomVelocity();
         }
-        if(Math.random() > 0.99){
-            this.endVelocity = Util.randomVelocity();
+        if(Math.random() > 0.98){
+            this.endTargetVelocity = Util.randomVelocity();
         }
+    }
+
+    void accelerate(velocity, target, acceleration, limit){
+        // update velocity
+        PVector startChange = Util.copyVector(target);
+        // console.log(startChange, this.acceleration);
+        startChange.x *= acceleration.x;
+        startChange.y *= acceleration.y;
+
+        velocity.add(startChange);
+        velocity.limit(2);
     }
 
     void draw(){
