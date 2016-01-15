@@ -13,6 +13,8 @@ class Shell{
 
     PVector startVelocity;
     PVector endVelocity;
+    PVector control1Velocity;
+    PVector control2Velocity;
     PVector startTargetVelocity;
     PVector endTargetVelocity;
     PVector acceleration;
@@ -22,7 +24,7 @@ class Shell{
         this.size = new PVector(100, 200);
 
         // pick random points
-        int min = 100;
+        int min = 150;
         aStart          = Util.randomPoint(min, width - min, min, height - min);
         aEnd            = Util.randomPoint(min, width - min, min, height - min);
         aControlStart   = Util.randomPoint(min, width - min, min, height - min);
@@ -32,7 +34,9 @@ class Shell{
         bControlStart   = Util.randomPoint(min, width - min, min, height - min);
 
         startVelocity = Util.randomVelocity();
+        control1Velocity = Util.randomVelocity();
         endVelocity = Util.randomVelocity();
+        control2Velocity = Util.randomVelocity();
 
         startTargetVelocity = startVelocity;
         endTargetVelocity = endVelocity;
@@ -44,8 +48,8 @@ class Shell{
     void update(){
         this.aStart.add(this.startVelocity);
         this.aEnd.add(this.endVelocity);
-        this.aControlStart.add(this.startVelocity);
-        this.bControlStart.add(this.endVelocity);
+        this.aControlStart.add(this.control1Velocity);
+        this.bControlStart.add(this.control2Velocity);
         
         // make end of A and start of B curves join smoothly using midpoint technique
         // reference: http://caffeineoncode.com/2010/12/joining-multiple-bezier-curves/
@@ -68,10 +72,10 @@ class Shell{
         this.accelerate(this.endVelocity, this.endTargetVelocity, this.acceleration, 1);
         console.log(this.startVelocity);
         // change direction randomly
-        if(Math.random() > 0.98){
+        if(Math.random() > 0.96){
             this.startTargetVelocity = Util.randomVelocity();
         }
-        if(Math.random() > 0.98){
+        if(Math.random() > 0.96){
             this.endTargetVelocity = Util.randomVelocity();
         }
     }
