@@ -57,6 +57,8 @@ class Shell{
 
         if(Math.random() > 0.98){
             this.startVelocity = Util.randomVelocity();
+        }
+        if(Math.random() > 0.99){
             this.endVelocity = Util.randomVelocity();
         }
     }
