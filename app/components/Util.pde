@@ -4,6 +4,17 @@ class Util{
         new PVector(1, -1), 
         new PVector(-1, 1), 
         new PVector(-1, -1)];
+
+    static PVector velocities8 = [
+        new PVector(1, 1), 
+        new PVector(1, -1), 
+        new PVector(-1, 1), 
+        new PVector(-1, -1),
+        new PVector(1, 0),
+        new PVector(0, 1),
+        new PVector(-1, 0),
+        new PVector(0, -1)
+    ];
     
     static PVector copyVector(PVector p){
         return new PVector(p.x, p.y, p.z);
@@ -22,6 +33,12 @@ class Util{
     static PVector randomVelocity(){
         int i = Math.floor(Math.random() * 10 % velocities.length);
         PVector v = Util.copyVector(Util.velocities[i]);
+        return v;
+    }
+
+    static PVector randomVelocity8(){
+        int i = Math.floor(Math.random() * 10 % velocities8.length);
+        PVector v = Util.copyVector(Util.velocities8[i]);
         return v;
     }
 

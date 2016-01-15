@@ -33,15 +33,15 @@ class Shell{
         bEnd            = aStart;
         bControlStart   = Util.randomPoint(min, width - min, min, height - min);
 
-        startVelocity = Util.randomVelocity();
-        control1Velocity = Util.randomVelocity();
-        endVelocity = Util.randomVelocity();
-        control2Velocity = Util.randomVelocity();
+        startVelocity = Util.randomVelocity8();
+        control1Velocity = Util.randomVelocity8();
+        endVelocity = Util.randomVelocity8();
+        control2Velocity = Util.randomVelocity8();
 
         startTargetVelocity = startVelocity;
         endTargetVelocity = endVelocity;
 
-        acceleration = Util.randomVelocity();
+        acceleration = Util.randomVelocity8();
         acceleration.div(10);
     }
 
@@ -70,13 +70,12 @@ class Shell{
 
         this.accelerate(this.startVelocity, this.startTargetVelocity, this.acceleration, 1);
         this.accelerate(this.endVelocity, this.endTargetVelocity, this.acceleration, 1);
-        console.log(this.startVelocity);
         // change direction randomly
         if(Math.random() > 0.96){
-            this.startTargetVelocity = Util.randomVelocity();
+            this.startTargetVelocity = Util.randomVelocity8();
         }
         if(Math.random() > 0.96){
-            this.endTargetVelocity = Util.randomVelocity();
+            this.endTargetVelocity = Util.randomVelocity8();
         }
     }
 
