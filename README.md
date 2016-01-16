@@ -4,7 +4,8 @@ Experiments with generative art.
 ## Demos
 1. [Crystaline](http://piratefsh.github.io/generative-art/public/trees/)
 2. [Intersections](http://piratefsh.github.io/generative-art/public/intersections/)
-3. [Color typewriter](http://piratefsh.github.io/generative-art/public/typewriter/). Not quite generative art, but fun. 
+3. [Shells](http://piratefsh.github.io/generative-art/public/shells/)
+4. [Color typewriter](http://piratefsh.github.io/generative-art/public/typewriter/). Not quite generative art, but fun. 
  
 ## Development 
 ### Install
