@@ -1,4 +1,8 @@
+// setup for processing.js
+
 import processingSrc from 'file!processing-js/processing.js'
+
+// .pde files to inject
 import main from 'file!./main.pde'
 import GameOfLife from 'file!components/GameOfLife.pde'
 
@@ -12,8 +16,8 @@ export default {
             // set up processing sources
             const canvas = document.getElementById('playground')
 
-            // processing instance
-
+            // manually trigger onkeydown for 'backspace'
+            // override default action of going to previous site
             canvas.addEventListener('keydown', (e)=>{
                 if(e.keyCode == 8){
                     e.preventDefault();
@@ -24,6 +28,7 @@ export default {
                 }
             })
 
+            // list of .pde files to include
             const sources = [main, GameOfLife];
             canvas.setAttribute('data-processing-sources', sources.join(' '))
 
@@ -31,6 +36,7 @@ export default {
             Processing.reload()
         })
 
+        // append processing script
         document.body.appendChild(processing)
     }
 }

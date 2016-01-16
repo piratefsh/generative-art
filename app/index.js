@@ -1,4 +1,5 @@
-import art from './art'
+import setup from './setup'
 import 'styles/style.scss' 
 
-art.init()
+// setup processing
+setup.init()
