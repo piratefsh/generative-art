@@ -86,10 +86,12 @@ class GameOfLife{
         // save state (for doing scale transformations)
         pushMatrix();
 
-        // set style of live cell
-        stroke(255, 255, 255, 100);
+        // set stroke and fill style of live cell
+        color c = color(240, 240, 240);
+        fill(c);
+        stroke(c, 100);
+
         strokeWeight(0.4);
-        fill(250, 250, 250);
         
         // scale canvas up for size of each cell
         scale(this.scale);

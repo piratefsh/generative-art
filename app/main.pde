@@ -10,7 +10,7 @@ void setup()
     int sizey = Math.floor(window.innerHeight/scale);
     gol = new GameOfLife({x: sizex, y: sizey}, scale);
 
-    frameRate(8);
+    frameRate(6);
 }
 
 void draw(){  
