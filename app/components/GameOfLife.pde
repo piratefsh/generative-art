@@ -1,4 +1,5 @@
 class GameOfLife{
+    // takes in size of grid and scale (size of each cell drawn)
     GameOfLife(size, scale){
         // initialize variables
         this.grid = {};
@@ -80,7 +81,7 @@ class GameOfLife{
         noStroke();
 
         // cover over previous state
-        fill(10, 10, 10, 150);
+        fill(10, 10, 10, 180);
         rect(0, 0, width, height);
 
         // save state (for doing scale transformations)

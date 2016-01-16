@@ -1,16 +1,23 @@
 GameOfLife gol;
+int w = window.innerWidth;
+int h = window.innerHeight;
 
 void setup()
 {
-    size(window.innerWidth, window.innerHeight);
+    // set size of canvas
+    size(w, h);
+
+    // set background color
     background(10);
     
-    int scale = 8;
-    int sizex = Math.floor(window.innerWidth/scale);
-    int sizey = Math.floor(window.innerHeight/scale);
+    int scale = 4;
+    int sizex = Math.floor(w/scale);
+    int sizey = Math.floor(h/scale);
+
+    // create instance
     gol = new GameOfLife({x: sizex, y: sizey}, scale);
 
-    frameRate(6);
+    frameRate(12);
 }
 
 void draw(){  
