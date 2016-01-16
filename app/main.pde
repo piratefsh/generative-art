@@ -1,18 +1,20 @@
-int width = Math.floor(window.innerWidth);
-int height = Math.floor(window.innerHeight);
-Shell shell;
+GameOfLife gol;
 
 void setup()
 {
-  size(width, height);
-  background(250);
+    size(window.innerWidth, window.innerHeight);
+    background(10);
+    
+    int scale = 8;
+    int sizex = Math.floor(window.innerWidth/scale);
+    int sizey = Math.floor(window.innerHeight/scale);
+    gol = new GameOfLife({x: sizex, y: sizey}, scale);
 
-  hint(ENABLE_OPENGL_4X_SMOOTH);
-  shell = new Shell();
+    frameRate(8);
 }
 
 void draw(){  
-  shell.update();
-  shell.draw();
+    gol.draw();
+    gol.update();
 }
 

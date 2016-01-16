@@ -1,7 +1,6 @@
 import processingSrc from 'file!processing-js/processing.js'
 import main from 'file!./main.pde'
-import Shell from 'file!components/Shell.pde'
-import Util from 'file!components/Util.pde'
+import GameOfLife from 'file!components/GameOfLife.pde'
 
 export default {
     init(){
@@ -25,7 +24,7 @@ export default {
                 }
             })
 
-            const sources = [main, Shell, Util];
+            const sources = [main, GameOfLife];
             canvas.setAttribute('data-processing-sources', sources.join(' '))
 
             // reload Processing to catch changes
