@@ -3,7 +3,7 @@
 import processingSrc from 'file!processing-js/processing.js'
 
 // .pde files to inject
-import main from 'file!./main.pde'
+import main from 'file!components/main.pde'
 import GameOfLife from 'file!components/GameOfLife.pde'
 
 export default {
