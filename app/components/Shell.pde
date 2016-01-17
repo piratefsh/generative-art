@@ -19,6 +19,10 @@ class Shell{
     PVector endTargetVelocity;
     PVector acceleration;
 
+    color col;
+    PVector colRange;
+    int hueVelocity;
+
     Shell(){
         this.points = new ArrayList();
         this.size = new PVector(100, 200);
@@ -33,6 +37,7 @@ class Shell{
         bEnd            = aStart;
         bControlStart   = Util.randomPoint(min, width - min, min, height - min);
 
+        // initial velocity of start, end and control points
         startVelocity = Util.randomVelocity8();
         control1Velocity = Util.randomVelocity8();
         endVelocity = Util.randomVelocity8();
@@ -43,6 +48,18 @@ class Shell{
 
         acceleration = Util.randomVelocity8();
         acceleration.div(10);
+
+        colorMode(HSB);
+        hueVelocity = 0.1;
+
+        // range of colors
+        int segments = 6;
+        int segmentSize = Math.floor(255/segments);
+        int colRangeStart = Util.random(0, segments, true) * segmentSize;
+
+        colRange = new PVector(colRangeStart, colRangeStart + segmentSize);
+        col = color(colRangeStart + hueVelocity, 230, 200);
+        console.log(colRange);
     }
 
     void update(){
@@ -67,16 +84,26 @@ class Shell{
         this.bControlEnd.mult(2);
         this.bControlEnd.sub(this.aControlStart);
         this.aStart = this.bEnd;
-
         this.accelerate(this.startVelocity, this.startTargetVelocity, this.acceleration, 1);
         this.accelerate(this.endVelocity, this.endTargetVelocity, this.acceleration, 1);
         // change direction randomly
-        if(Math.random() > 0.96){
+        if(Math.random() > 0.99){
             this.startTargetVelocity = Util.randomVelocity8();
         }
-        if(Math.random() > 0.96){
+        if(Math.random() > 0.99){
             this.endTargetVelocity = Util.randomVelocity8();
         }
+
+        // update hue
+        float h = hue(this.col);
+
+        // change hue direction if exceeds limits
+        if(h+this.hueVelocity >= this.colRange.y || h+this.hueVelocity <= this.colRange.x){
+            this.hueVelocity *= -1;
+        } 
+        console.log(h, h+this.hueVelocity);
+        h = (h + this.hueVelocity);
+        this.col = color(h, saturation(this.col), brightness(this.col));
     }
 
     void accelerate(velocity, target, acceleration, limit){
@@ -92,7 +119,7 @@ class Shell{
 
     void draw(){
         noFill();
-        stroke(0, 0, 0, 5);
+        stroke(this.col, 15);
         bezier(this.aStart.x, this.aStart.y, this.aControlStart.x, this.aControlStart.y, this.aControlEnd.x, this.aControlEnd.y, this.aEnd.x, this.aEnd.y);
         bezier(this.bStart.x, this.bStart.y, this.bControlStart.x, this.bControlStart.y, this.bControlEnd.x, this.bControlEnd.y, this.bEnd.x, this.bEnd.y);
     }
