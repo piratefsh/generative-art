@@ -50,7 +50,7 @@ class Shell{
         acceleration.div(10);
 
         colorMode(HSB);
-        hueVelocity = 0.1;
+        hueVelocity = 0.2;
 
         // range of colors
         int segments = 6;
@@ -86,6 +86,7 @@ class Shell{
         this.aStart = this.bEnd;
         this.accelerate(this.startVelocity, this.startTargetVelocity, this.acceleration, 1);
         this.accelerate(this.endVelocity, this.endTargetVelocity, this.acceleration, 1);
+        
         // change direction randomly
         if(Math.random() > 0.99){
             this.startTargetVelocity = Util.randomVelocity8();
@@ -101,7 +102,6 @@ class Shell{
         if(h+this.hueVelocity >= this.colRange.y || h+this.hueVelocity <= this.colRange.x){
             this.hueVelocity *= -1;
         } 
-        console.log(h, h+this.hueVelocity);
         h = (h + this.hueVelocity);
         this.col = color(h, saturation(this.col), brightness(this.col));
     }
