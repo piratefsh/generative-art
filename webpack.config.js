@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, 'public/shellc'),
         publicPath: '',
         filename: 'bundle.js'
     },
