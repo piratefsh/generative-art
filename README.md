@@ -1,5 +1,5 @@
 # Generative art with Processing.js
-Experiments with generative art.
+Experiments with generative art. Check out branches for each project.
 
 ## Demos
 1. [Crystaline](http://piratefsh.github.io/generative-art/public/trees/)
