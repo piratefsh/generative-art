@@ -10,19 +10,19 @@ void setup()
     background(250);
     hint(ENABLE_OPENGL_4X_SMOOTH);
 
-    l = kochSnowflake();
+    l = tree();
 
     noLoop();
 }
 
 void draw(){  
     translate(100, 200, 0);
-    String it = l.iterate(4);
+    rotate(radians(-90));
+    String it = l.iterate(6);
     l.draw(it);
 }
 
 LSystems dragonCurve(){
-    // tumbleweed
     String axiom = 'X';
     int angle = 90;
     LSystems l = new LSystems(axiom, angle, 6);
@@ -32,8 +32,18 @@ LSystems dragonCurve(){
 
 }
 
+LSystems tree(){
+    String axiom = 'F';
+    int angle = 15;
+    LSystems l = new LSystems(axiom, angle, 20);
+    l.addRule('F', 'G[-F]+F');
+    l.addRule('G', 'G');
+    return l;
+
+}
+
+
 LSystems kochSnowflake(){
-    // tumbleweed
     String axiom = 'F++F++F';
     int angle = 60;
     LSystems l = new LSystems(axiom, angle, 2);

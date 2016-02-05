@@ -23,14 +23,13 @@ class LSystems{
         String result = this.axiom.toString();
         for(int i = 0; i < n; i++){
             String newRes = "";
-
             for(int j = 0; j < result.length; j++){
                 char c = result[j];
                 boolean found = false;
                 for(var letter in this.rules){
                     var replacement = this.rules[letter];
                     if(c == letter.toString()){
-                        newRes = newRes + replacement;
+                        newRes = newRes + replacement.toString();
                         found = true;
                     }
                 }
@@ -74,7 +73,7 @@ class LSystems{
 
                         }
                     }
-                    if (!found) console.error('Unknown token:', token);
+                    if (!found) console.error('Unknown token:', token.toString());
                 }
             
         }
