@@ -10,15 +10,15 @@ void setup()
     background(250);
     hint(ENABLE_OPENGL_4X_SMOOTH);
 
-    l = tree();
+    l = binaryTree();
 
     noLoop();
 }
 
 void draw(){  
-    translate(100, 200, 0);
+    translate(100, 400, 0);
     rotate(radians(-90));
-    String it = l.iterate(6);
+    String it = l.iterate(7);
     l.draw(it);
 }
 
@@ -32,12 +32,12 @@ LSystems dragonCurve(){
 
 }
 
-LSystems tree(){
+LSystems binaryTree(){
     String axiom = 'F';
-    int angle = 15;
-    LSystems l = new LSystems(axiom, angle, 20);
+    int angle = 30;
+    LSystems l = new LSystems(axiom, angle, 2);
     l.addRule('F', 'G[-F]+F');
-    l.addRule('G', 'G');
+    l.addRule('G', 'GG');
     return l;
 
 }
