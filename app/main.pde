@@ -1,6 +1,9 @@
 int width = Math.floor(window.innerWidth);
 int height = Math.floor(window.innerHeight);
 
+String axiom = 'F';
+int angle = 10;
+
 LSystems l;
 String iteration;
 void setup()
@@ -9,9 +12,9 @@ void setup()
     background(250);
     hint(ENABLE_OPENGL_4X_SMOOTH);
 
-    l = new LSystems('F', 10, 10);
+    l = new LSystems(axiom, angle, 10);
     l.addRule('F', 'F[-F]+F');
-    iteration = l.iterate(7);
+    iteration = l.iterate(8);
     noLoop();
 }
 
