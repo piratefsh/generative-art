@@ -1,8 +1,6 @@
 int width = Math.floor(window.innerWidth);
 int height = Math.floor(window.innerHeight);
 
-String axiom = 'F';
-int angle = 10;
 
 LSystems l;
 String iteration;
@@ -12,14 +10,32 @@ void setup()
     background(250);
     hint(ENABLE_OPENGL_4X_SMOOTH);
 
-    l = new LSystems(axiom, angle, 10);
-    l.addRule('F', 'F[-F]+F');
-    iteration = l.iterate(8);
+    l = dragonCurve();
+
     noLoop();
 }
 
 void draw(){  
-    translate(400, 200, 0);
-    l.draw(iteration);
+    translate(600, 300, 0);
+    String it = l.iterate(12);
+    l.draw(it);
 }
 
+LSystems dragonCurve(){
+    // tumbleweed
+    String axiom = 'X';
+    int angle = 90;
+    LSystems l = new LSystems(axiom, angle, 6);
+    l.addRule('X', 'X+Y+');
+    l.addRule('Y', '-X-Y');
+    return l;
+
+}
+LSystems tumbleweed(){
+    // tumbleweed
+    String axiom = 'F';
+    int angle = 10;
+    LSystems l = new LSystems(axiom, angle, 10);
+    l.addRule('F', 'F[-F]+F');
+    return l;
+}
