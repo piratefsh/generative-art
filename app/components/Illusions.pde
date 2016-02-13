@@ -2,7 +2,7 @@ public class Illusion{
     Illusion(){
         this.overlay = [];
 
-        this.makeOverlay(24);
+        this.makeOverlay(34);
         this.overlayVelocity = {
             x: 0.8,
             y: 0
@@ -24,11 +24,11 @@ public class Illusion{
 
     void draw(){
         background(255);
-        this.spacing(1.05, color(0, 190));
+        this.spacing(1.05, height/2, color(0, 190));
 
         pushMatrix();
         translate(0, height/2);
-        this.spacing(0.95, color(0, 160));
+        this.spacing(0.95, height/2, color(0, 160));
         popMatrix();
 
         pushMatrix();
@@ -48,7 +48,7 @@ public class Illusion{
         }.bind(this))
     }
 
-    void spacing(s, c){
+    void spacing(s, h, c){
         pushMatrix();
         fill(c);
         noStroke();
@@ -61,7 +61,7 @@ public class Illusion{
             var x = s*Math.floor(i * (width/n));
             var y = 0;
             var w = colw;
-            var h = height/2;
+            var h = h;
             rect(x, y, w, h);
             
         }
