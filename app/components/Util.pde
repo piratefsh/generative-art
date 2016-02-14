@@ -20,6 +20,11 @@ class Util{
         return new PVector(p.x, p.y, p.z);
     }
 
+    static PVector randomPoint3D(minw, maxw, minh, maxh, minz, maxz){
+        PVector p = Util.randomPoint(minw, maxw, minh, maxh);
+        p.z = Util.random(minz, maxz, true);
+        return p;
+    }
     static PVector randomPoint(minw, maxw, minh, maxh){
         minw = minw || 0;
         minh = minh || 0;
