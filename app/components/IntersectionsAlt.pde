@@ -12,7 +12,7 @@ class IntersectionsAlt {
             this.points.push({
                 id: i,
                 coord: rand,
-                radius: Util.random(50, Math.max(width/8, 100)),
+                radius: Util.random(50, Math.max(width*height/10000, 100)),
                 velocity: vel,
             });
         }
