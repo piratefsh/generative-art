@@ -19,3 +19,25 @@ void draw(){
     i.update();
     i.draw();
 }
+
+void mousePressed(){
+    i.mousePressed();
+}
+
+void mouseDragged() {
+    i.mouseDragged();
+}
+
+
+void mouseReleased() {
+    i.mouseReleased();
+}
+
+void keyPressed(){
+    if(keyCode == UP){
+        i.rotZ(10);
+    }
+    else if(keyCode == DOWN){
+        i.rotZ(-10);
+    }
+}

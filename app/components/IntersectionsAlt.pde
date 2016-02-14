@@ -17,7 +17,7 @@ class IntersectionsAlt {
             this.points.push({
                 id: i,
                 coord: rand,
-                radius: Util.random(50, Math.max(width*height/3200, 100)),
+                radius: Util.random(50, Math.max(width*height/4000, 100)),
                 velocity: vel,
             });
         }
@@ -30,6 +30,12 @@ class IntersectionsAlt {
             radius: 200,
             velocity: vel,
         });
+
+        this.startPan = new PVector(0, 0);
+        this.endPan = new PVector(0, 0);
+        this.isPanning = false;
+        this.dragged = false;
+        this.rotation = new PVector(0, 0, 0);
     }
 
     void update(){
@@ -56,11 +62,11 @@ class IntersectionsAlt {
 
         this.shapes.forEach(function(s){
             s.color.alpha = s.color.alpha < s.colorMax? (s.color.alpha + s.colorVel) : s.colorMax;
-        })
+        });
     }
 
     void draw(){
-        translate(0,0, -this.depth);
+        translate(0,0, -this.depth-200);
 
 
         pushMatrix();
@@ -68,8 +74,11 @@ class IntersectionsAlt {
         noFill();
 
         translate(width/2, height/2, this.depth/2);
-        rotateY(45);
-        // rotateX(45);
+        PVector rot = this.getRotation();
+        rotateY(this.rotation.y + rot.y);
+        rotateX(this.rotation.x + rot.x);
+        rotateZ(this.rotation.z + rot.z);
+        //rotateX(45);
 
         // draw axes
         stroke(255, 0, 0, 100);
@@ -124,7 +133,7 @@ class IntersectionsAlt {
                         base: 255,
                         alpha: 0,
                     },
-                    colorVel: 1,
+                    colorVel: 0.5,
                     colorMax: 80,
                     colorReset: 0,
 
@@ -155,7 +164,7 @@ class IntersectionsAlt {
 
             // if is new shape, reset opacity
             if(newVertices.length != shape.vertices.length){
-                shape.color.alpha =  shape.color.colorReset;
+                shape.color.alpha =  shape.colorReset;
             }
             shape.vertices = newVertices;
             shape.verticesIds = newVerticesIds;
@@ -178,5 +187,42 @@ class IntersectionsAlt {
             endShape(CLOSE);
 
         }
+    }
+
+    PVector getRotation(){
+        float round = 2*Math.PI;
+        int z = round*Math.abs(this.endPan.z/this.depth);
+        if(this.dragged){
+            int x =  (round*Math.abs(this.startPan.y-this.endPan.y)/height);
+            int y =  -(round*Math.abs(this.startPan.x-this.endPan.x)/width);
+            return new PVector(x, y, z);
+        }
+        else{
+            return new PVector(0, 0, z);
+        }
+    }
+
+    void mousePressed(){
+        this.startPan = new PVector(mouseX, mouseY);
+    }
+
+    void mouseDragged(){
+        this.dragged = true;
+        this.endPan = new PVector(mouseX, mouseY);
+    }
+
+    void mouseReleased(){
+        PVector rot = this.getRotation();
+        if(this.dragged){
+            this.rotation.add(rot);
+        }
+        this.startPan = new PVector(0, 0);
+        this.endPan = new PVector(0, 0);
+        this.dragged = false;
+    }
+
+    void rotZ(int val){
+        this.endPan.z += val;
+        this.rotation.add(this.getRotation());
     }
 }
