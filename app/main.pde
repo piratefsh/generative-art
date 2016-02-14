@@ -9,7 +9,7 @@ void setup()
     background(250);
     hint(ENABLE_OPENGL_4X_SMOOTH);
     frameRate(60);
-    i = new IntersectionsAlt(width/12);
+    i = new IntersectionsAlt(width*height/(100*100));
 }
 
 void draw(){  
