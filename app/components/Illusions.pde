@@ -2,23 +2,30 @@ public class Illusion{
     Illusion(){
         this.overlay = [];
 
-        this.makeOverlay(50);
+        this.padding = {
+            x: 0,
+            y: 20
+        }
         this.overlayVelocity = {
-            x: 0.6,
+            x: -0.3,
             y: 0
         }
 
+        this.makeOverlay(30);
         this.shape = this.makeShape();
+
     }
 
     void makeOverlay(int n){
+        console.log(this.padding);
         int colw = width/n * 0.7;
+        int padY = this.padding.y;
         for(int i = 0; i < n; i++){
             this.overlay.push({
                 x: Math.floor(i * (width/n)) - colw/2,
-                y: 10,
+                y: padY,
                 w: colw,
-                h: height-20
+                h: height - padY*2
             });
         }
 
@@ -28,10 +35,7 @@ public class Illusion{
         background(255);
 
         this.drawShape();
-
-        pushMatrix();
         this.drawOverlay();
-        popMatrix();
     }
 
     void makeRectMask(cx, cy, w, h){
@@ -41,7 +45,18 @@ public class Illusion{
         mask.fill(255);
         mask.noStroke();
         mask.rectMode(CENTER);
-        mask.rect(cx, cy, w, h);
+        mask.circle(cx, cy, w, h);
+        return mask;
+    }
+
+    void makeCircleMask(cx, cy, w, h){
+        // create mask
+        PGraphics mask = createGraphics(width, height, P2D);
+        mask.background(0);
+        mask.fill(255);
+        mask.noStroke();
+        mask.ellipseMode(CENTER);
+        mask.ellipse(cx, cy, w, h);
         return mask;
     }
 
@@ -51,10 +66,15 @@ public class Illusion{
     void makeShape(){
 
         PGraphics shape = createGraphics(width, height, P2D);
+        int levels = 5;
+        int r = (height - this.padding.y*4) / levels;
 
-        for(int i = 6; i > 0; i--){
-            PGraphics mask = this.makeRectMask(width/2, height/2, 50*i, 50*i);
-            PGraphics lines = this.drawSpacing(1, height, color(255, 1), true, i);
+        for(int i = levels; i > 0; i--){
+            PGraphics mask = this.makeCircleMask(width/2, height/2, r*i, r*i);
+
+            color col = i % 2 == 0 ? color(220, 100, 0): color(0, 150, 200);
+            // color col = color(220, 100, 0);
+            PGraphics lines = this.drawSpacing(1, height, col, true, i);
             PImage imgLines = lines.get();
             imgLines.mask(mask.get());
             shape.image(imgLines, 0, 0);
@@ -74,11 +94,14 @@ public class Illusion{
 
     void update(){
         this.overlay.forEach(function(o){
-            if(o.x < width){
-                o.x += this.overlayVelocity.x;
+            if(o.x > width){
+                o.x = 0;
+            }
+            else if(o.x < -o.w/2){
+                o.x = width- o.w/2;
             }
             else{
-                o.x = 0;
+                o.x += this.overlayVelocity.x;
             }
         }.bind(this))
     }
@@ -90,9 +113,9 @@ public class Illusion{
             shift = 0;
         }
         PGraphics res = createGraphics(width, height, P2D);
-
+        res.background(255, 1);
         res.pushMatrix();
-        res.fill(c);
+        
         res.noStroke();
         res.rectMode(CORNER);
 
@@ -100,6 +123,7 @@ public class Illusion{
         var n = this.overlay.length; 
         var bars = n * (1+1-s); // num of bars to draw after scale
         int colw = (ws/this.overlay.length * 0.5);
+        int colshift = colw*0.4;
 
         var shiftX = shift * (colw*0.5);
 
@@ -109,10 +133,12 @@ public class Illusion{
             var w = colw;
             var h = h;
 
-
+            res.fill(30);
             res.rect(x, y, w, h);
-            
+            res.fill(c);
+            res.rect(x+w, y+w, colshift, h);
         }
+
         res.popMatrix();
 
         if(!ret){
@@ -124,7 +150,7 @@ public class Illusion{
 
     void drawOverlay(){
         pushMatrix();
-        fill(0);
+        fill(40, 250);
         noStroke();
         rectMode(CORNER);
         for(int i = 0; i < this.overlay.length; i++){
