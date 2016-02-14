@@ -40,4 +40,10 @@ void keyPressed(){
     else if(keyCode == DOWN){
         i.rotZ(-10);
     }
+    else if(key == '+'){
+        i.zoomZ(20);
+    }
+    else if(key == '-'){
+        i.zoomZ(-20);
+    }
 }

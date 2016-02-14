@@ -36,6 +36,8 @@ class IntersectionsAlt {
         this.isPanning = false;
         this.dragged = false;
         this.rotation = new PVector(0, 0, 0);
+
+        this.zoom = -this.depth-200;
     }
 
     void update(){
@@ -66,7 +68,7 @@ class IntersectionsAlt {
     }
 
     void draw(){
-        translate(0,0, -this.depth-200);
+        translate(0,0, this.zoom);
 
 
         pushMatrix();
@@ -224,5 +226,9 @@ class IntersectionsAlt {
     void rotZ(int val){
         this.endPan.z += val;
         this.rotation.add(this.getRotation());
+    }
+
+    void zoomZ(int val){
+        this.zoom += val;
     }
 }
