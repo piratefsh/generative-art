@@ -83,7 +83,6 @@ class IntersectionsAlt {
         stroke(255, 100);
         box(width, height, this.depth);
         lights();
-
         this.drawBodies();
 
         popMatrix();
@@ -126,7 +125,8 @@ class IntersectionsAlt {
                         alpha: 0,
                     },
                     colorVel: 1,
-                    colorMax: 100,
+                    colorMax: 80,
+                    colorReset: 0,
 
                 }
 
@@ -152,12 +152,10 @@ class IntersectionsAlt {
                     newVerticesIds += o.id;
                 }
             }
-            // end point
-            newVertices.push(Util.copyVector(p.coord));
 
             // if is new shape, reset opacity
             if(newVertices.length != shape.vertices.length){
-                shape.color.alpha =  0;
+                shape.color.alpha =  shape.color.colorReset;
             }
             shape.vertices = newVertices;
             shape.verticesIds = newVerticesIds;
@@ -168,15 +166,16 @@ class IntersectionsAlt {
             var s = this.shapes[id];
             fill(s.color.base, s.color.alpha);
             stroke(255, s.color.alpha*2);
-
             strokeJoin(MITER);
+
             // start polygon
             beginShape();
             s.vertices.forEach(function(v){
+                normal(width/2, height/2, 0);
                 vertex(v.x, v.y, v.z);
 
             });
-            endShape();
+            endShape(CLOSE);
 
         }
     }
