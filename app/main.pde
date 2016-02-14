@@ -35,10 +35,10 @@ void mouseReleased() {
 
 void keyPressed(){
     if(keyCode == UP){
-        i.rotZ(10);
+        i.rotZ(2);
     }
     else if(keyCode == DOWN){
-        i.rotZ(-10);
+        i.rotZ(-2);
     }
     else if(key == '+'){
         i.zoomZ(20);
