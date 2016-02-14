@@ -2,14 +2,14 @@ int width = Math.floor(window.innerWidth);
 int height = Math.floor(window.innerHeight);
 
 
-Illusion i;
+IntersectionsAlt i;
 void setup()
 {
     size(width, height);
     background(250);
     hint(ENABLE_OPENGL_4X_SMOOTH);
     frameRate(60);
-    i = new Illusion();
+    i = new IntersectionsAlt(width/12);
 }
 
 void draw(){  
