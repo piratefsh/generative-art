@@ -60,8 +60,8 @@ class IntersectionsAlt {
 
         // update mouse 
         var mouseP = this.points[this.points.length-1];
-        mouseP.coord.x = mouseX - this.width/2;
-        mouseP.coord.y = mouseY - this.height/2;
+        mouseP.coord.x = mouseX/width * this.width - this.width/2;
+        mouseP.coord.y = mouseY/height * this.height - this.height/2;
 
         this.shapes.forEach(function(s){
             s.color.alpha = s.color.alpha < s.colorMax? (s.color.alpha + s.colorVel) : s.colorMax;
