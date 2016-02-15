@@ -10,7 +10,7 @@ void setup()
     hint(ENABLE_OPENGL_4X_SMOOTH);
     background(50);
     frameRate(60);
-    i = new IntersectionsAlt(width*height/(100*100)*3);
+    i = new IntersectionsAlt(width*height/(100*100)*2.8);
     // noLoop();
 }
 

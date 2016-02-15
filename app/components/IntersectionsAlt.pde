@@ -28,7 +28,7 @@ class IntersectionsAlt {
         this.points.push({
             id: -1,
             coord: new PVector(mouseX-this.width/2, mouseY-this.height/2, 0),
-            radius: 200,
+            radius: 150,
             velocity: vel,
         });
 
