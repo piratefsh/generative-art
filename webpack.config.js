@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public/constellations'),
+        path: path.resolve(__dirname, 'public/constellations3d'),
         publicPath: '',
         filename: 'bundle.js'
     },

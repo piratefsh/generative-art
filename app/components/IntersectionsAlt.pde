@@ -3,21 +3,22 @@ class IntersectionsAlt {
         this.points = [];
         this.numPoints = n;
         this.shapes = {};
-
-        this.depth = Math.min(width, height);
+        this.width = 600;
+        this.height = 600;
+        this.depth = Math.min(this.width, this.height);
 
         for(int i = 0; i < n; i++){
-            PVector rand = Util.randomPoint3D(-width/2, width/2, -height/2, height/2, -this.depth/2, this.depth/2);
+            PVector rand = Util.randomPoint3D(-this.width/2, this.width/2, -this.height/2, this.height/2, -this.depth/2, this.depth/2);
             PVector vel;
             while(vel == null || vel.mag() == 0){
               vel = new PVector(Util.random(-1, 1), Util.random(-1, 1), Util.random(-1, 1));
             }
-            vel.div(4);
+            vel.div(3);
 
             this.points.push({
                 id: i,
                 coord: rand,
-                radius: Util.random(50, Math.max(width*height/4000, 100)),
+                radius: Util.random(50, Math.max(this.width*this.height/4000, 100)),
                 velocity: vel,
             });
         }
@@ -26,7 +27,7 @@ class IntersectionsAlt {
         vel.div(4);
         this.points.push({
             id: -1,
-            coord: new PVector(mouseX-width/2, mouseY-height/2, 0),
+            coord: new PVector(mouseX-this.width/2, mouseY-this.height/2, 0),
             radius: 200,
             velocity: vel,
         });
@@ -38,29 +39,29 @@ class IntersectionsAlt {
         this.rotation = new PVector(0, 0, 0);
 
         this.zoom = -this.depth-200;
+
     }
 
     void update(){
         // move points
         int depth = this.depth;
         this.points.forEach(function(p){
-            if (p.coord.x < -width/2 || p.coord.x > width/2){
+            if (p.coord.x < -this.width/2 || p.coord.x > this.width/2){
                 p.velocity.x *= -1;
             }
-            if (p.coord.y < -height/2 || p.coord.y > height/2){
+            if (p.coord.y < -this.height/2 || p.coord.y > this.height/2){
                 p.velocity.y *= -1;
             }
             if (p.coord.z < -depth/2 || p.coord.z > depth/2){
                 p.velocity.z *= -1;
             }
-
             p.coord.add(p.velocity);
-        });
+        }.bind(this));
 
         // update mouse 
         var mouseP = this.points[this.points.length-1];
-        mouseP.coord.x = mouseX - width/2;
-        mouseP.coord.y = mouseY - height/2;
+        mouseP.coord.x = mouseX - this.width/2;
+        mouseP.coord.y = mouseY - this.height/2;
 
         this.shapes.forEach(function(s){
             s.color.alpha = s.color.alpha < s.colorMax? (s.color.alpha + s.colorVel) : s.colorMax;
@@ -68,14 +69,19 @@ class IntersectionsAlt {
     }
 
     void draw(){
-        translate(0,0, this.zoom);
-
+        // translate to viewport
+        int shiftX = width/2-this.width/2;
+        translate(shiftX,0, this.zoom);
+        background(0);
+        
+        // add legend
+        this.drawLegend(shiftX);
 
         pushMatrix();
-        background(0);
         noFill();
 
-        translate(width/2, height/2, this.depth/2);
+        // translate to center
+        translate(this.width/2, this.height/2, this.depth/2);
         PVector rot = this.getRotation();
         rotateY(this.rotation.y + rot.y);
         rotateX(this.rotation.x + rot.x);
@@ -83,20 +89,35 @@ class IntersectionsAlt {
         //rotateX(45);
 
         // draw axes
-        stroke(255, 0, 0, 100);
-        line(0, 0, 0, 0, 0, this.depth/2);
-        stroke(0, 255, 0, 100);
-        line(0, 0, 0, 0, height/2, 0);
-        stroke(0, 0, 255, 100);
-        line(0, 0, 0, width/2, 0, 0);
+        //this.drawAxes();
 
         // draw box of bounds
         stroke(255, 100);
-        box(width, height, this.depth);
+        box(this.width, this.height, this.depth);
+
         lights();
         this.drawBodies();
 
         popMatrix();
+    }
+
+    void drawLegend(int shiftX){
+        fill(255);
+        textMode(MODEL);
+        textFont(createFont("Arial", 14, true)); 
+        textSize(14);
+        text('Click and drag to pan', -shiftX + 20, 30, -this.zoom);
+        text('Press + and - to zoom', -shiftX + 20, 50, -this.zoom);
+
+    }
+
+    void drawAxes(){
+        stroke(255, 0, 0, 100);
+        line(0, 0, 0, 0, 0, this.depth/2);
+        stroke(0, 255, 0, 100);
+        line(0, 0, 0, 0, this.height/2, 0);
+        stroke(0, 0, 255, 100);
+        line(0, 0, 0, this.width/2, 0, 0);
     }
 
     void drawBodies(){
@@ -182,7 +203,7 @@ class IntersectionsAlt {
             // start polygon
             beginShape();
             s.vertices.forEach(function(v){
-                normal(width/2, height/2, 0);
+                normal(this.width/2, this.height/2, 0);
                 vertex(v.x, v.y, v.z);
 
             });
@@ -195,8 +216,8 @@ class IntersectionsAlt {
         float round = 2*Math.PI;
         int z = round*Math.abs(this.endPan.z/this.depth);
         if(this.dragged){
-            int x =  (round*Math.abs(this.startPan.y-this.endPan.y)/height);
-            int y =  -(round*Math.abs(this.startPan.x-this.endPan.x)/width);
+            int x =  (round*Math.abs(this.startPan.y-this.endPan.y)/this.height);
+            int y =  -(round*Math.abs(this.startPan.x-this.endPan.x)/this.width);
             return new PVector(x, y, z);
         }
         else{
