@@ -2,11 +2,21 @@
 Experiments with generative art. Check out branches for each project.
 
 ## Demos
-1. [Crystaline](http://piratefsh.github.io/generative-art/public/trees/)
-2. [Intersections](http://piratefsh.github.io/generative-art/public/intersections/)
-3. [Constellations](http://piratefsh.github.io/generative-art/public/constellations/)
-4. [Shells](http://piratefsh.github.io/generative-art/public/shells/)
-5. [Color typewriter](http://piratefsh.github.io/generative-art/public/typewriter/). Not quite generative art, but fun. 
+
+### [Constellations](http://piratefsh.github.io/generative-art/public/constellations/)
+<iframe height="200" width="100%"  src="http://piratefsh.github.io/generative-art/public/constellations/"></iframe>
+
+### [Crystaline](http://piratefsh.github.io/generative-art/public/trees/)
+inspired by [p5p.cecinestpasparis.net](http://p5p.cecinestpasparis.net/)
+
+### [Shells](http://piratefsh.github.io/generative-art/public/shells/)
+inspired by [p5p.cecinestpasparis.net](http://p5p.cecinestpasparis.net/)
+
+### [Intersections](http://piratefsh.github.io/generative-art/public/intersections/). 
+inspired by [j.tarbell](http://www.complexification.net/gallery/machines/interMomentary/index.php)
+
+### [Color typewriter](http://piratefsh.github.io/generative-art/public/typewriter/). 
+Not quite generative art, but fun. 
  
 ## Development 
 ### Install
