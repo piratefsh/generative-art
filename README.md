@@ -1,13 +1,18 @@
 # Generative art with Processing.js
 Experiments with generative art. Check out branches for each project.
 
-## Demos
+## Experiments
 
 ### [Constellations](http://piratefsh.github.io/generative-art/public/constellations/)
 ![constellations](http://piratefsh.github.io/generative-art/public/_images/constellations.gif)
 
 ### [Constellations 3D](http://piratefsh.github.io/generative-art/public/constellations3d/)
 ![constellations](http://piratefsh.github.io/generative-art/public/_images/constellations3d.gif)
+
+### [L-Systems](https://github.com/piratefsh/generative-art/tree/L-Systems)
+![constellations](http://piratefsh.github.io/generative-art/public/_images/lsystems1.png)![constellations](http://piratefsh.github.io/generative-art/public/_images/lsystems2.png)![constellations](http://piratefsh.github.io/generative-art/public/_images/lsystems3.png)
+
+Simple L-Systems implementation in Processing. 
 
 ### [Crystaline](http://piratefsh.github.io/generative-art/public/trees/)
 ![constellations](http://piratefsh.github.io/generative-art/public/_images/trees.gif)
