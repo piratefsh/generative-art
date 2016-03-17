@@ -1,61 +1,94 @@
-int width = Math.floor(window.innerWidth);
-int height = Math.floor(window.innerHeight);
+int width = 600;
+int height = 600;
 
+// colors
+color pink = color(255, 20, 147);
+color green = color(154, 205, 50);
+color red = color(300, 28, 87);
+color yellow = color(255, 215, 0);
 
-LSystems l;
-String iteration;
+// depth of recursion
+int levels = 3;
+int edgeWidth = 400;
+
 void setup()
 {
     size(width, height);
-    background(250);
+    background(20);
     hint(ENABLE_OPENGL_4X_SMOOTH);
-
-    l = binaryTree();
-
     noLoop();
 }
 
-void draw(){  
-    translate(100, 400, 0);
-    rotate(radians(-90));
-    String it = l.iterate(7);
-    l.draw(it);
+void draw(){ 
+    int c2 = Math.pow(edgeWidth, 2) + Math.pow(edgeWidth/2, 2);
+    int triangleHeight = Math.sqrt(c2);
+
+    // start at x, y = 100, 200
+    translate((width-edgeWidth)/2, (height-triangleHeight));
+
+    // set styles
+    strokeWeight(4);
+    strokeJoin(ROUND);
+    stroke(pink);
+
+    // draw three edges in a triangle
+    edge(edgeWidth, levels) 
+    rotate(radians(120))
+    edge(edgeWidth, levels) 
+    rotate(radians(120))
+    edge(edgeWidth, levels) 
+
+    // save to png
+    // save('koch-'+levels+'.png')
 }
 
-LSystems dragonCurve(){
-    String axiom = 'X';
-    int angle = 90;
-    LSystems l = new LSystems(axiom, angle, 6);
-    l.addRule('X', 'X+Y+');
-    l.addRule('Y', '-X-Y');
-    return l;
+void edge(length, level){
+    // segment length
+    int sl = length/3;
 
-}
+    // base case, draw single _/\_
+    if(level == 1){
+        // _
+        line(0, 0, sl, 0);
 
-LSystems binaryTree(){
-    String axiom = 'F';
-    int angle = 30;
-    LSystems l = new LSystems(axiom, angle, 2);
-    l.addRule('F', 'G[-F]+F');
-    l.addRule('G', 'GG');
-    return l;
+        // _/
+        translate(sl, 0);
+        rotate(radians(-60));
+        line(0, 0, sl, 0);
 
-}
+        // _/\
+        translate(sl, 0);
+        rotate(radians(120));
+        line(0, 0, sl, 0);
+        
+        // _/\_
+        translate(sl, 0);
+        rotate(radians(-60));
+        line(0, 0, sl, 0);
 
+        // end at the end of last segment
+        translate(sl, 0);
+    }
 
-LSystems kochSnowflake(){
-    String axiom = 'F++F++F';
-    int angle = 60;
-    LSystems l = new LSystems(axiom, angle, 2);
-    l.addRule('F', 'F-F++F-F');
-    return l;
+    // recursive case, draw edge for every segment
+    else {
+        // _
+        stroke(pink);
+        edge(sl, level-1);
 
-}
-LSystems tumbleweed(){
-    // tumbleweed
-    String axiom = 'F';
-    int angle = 10;
-    LSystems l = new LSystems(axiom, angle, 10);
-    l.addRule('F', 'F[-F]+F');
-    return l;
+        // _/
+        stroke(green);
+        rotate(radians(-60));
+        edge(sl, level-1);
+
+        // _/\
+        stroke(red);
+        rotate(radians(120));
+        edge(sl, level-1);
+
+        // _/\_
+        stroke(yellow);
+        rotate(radians(-60));
+        edge(sl, level-1);
+    }
 }
