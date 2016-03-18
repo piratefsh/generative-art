@@ -18,7 +18,7 @@ class Koch{
   void draw(){
     int levels = this.levels;
     int edgeWidth = this.edgeWidth
-    
+
     background(0, 0);
     int c2 = Math.pow(edgeWidth, 2) + Math.pow(edgeWidth/2, 2);
     int offsetW = (width-edgeWidth)/2;
@@ -47,48 +47,33 @@ class Koch{
     // segment length
     int sl = length/3;
 
-    // base case, draw single _/\_
-    if(level == 1){
+    boolean setColor = level > 1;
+
+    // base case, draw single _
+    if(level == 0){
         // _
-        line(0, 0, sl, 0);
-
-        // _/
-        translate(sl, 0);
-        rotate(radians(-60));
-        line(0, 0, sl, 0);
-
-        // _/\
-        translate(sl, 0);
-        rotate(radians(120));
-        line(0, 0, sl, 0);
-        
-        // _/\_
-        translate(sl, 0);
-        rotate(radians(-60));
-        line(0, 0, sl, 0);
-
-        // end at the end of last segment
-        translate(sl, 0);
+        line(0, 0, length, 0);
+        translate(length, 0);
     }
 
     // recursive case, draw edge for every segment
     else {
         // _
-        stroke(pink);
+        if(setColor) stroke(pink);
         edge(sl, level-1);
 
         // _/
-        stroke(green);
+        if(setColor) stroke(green);
         rotate(radians(-60));
         edge(sl, level-1);
 
         // _/\
-        stroke(red);
+        if(setColor) stroke(red);
         rotate(radians(120));
         edge(sl, level-1);
 
         // _/\_
-        stroke(yellow);
+        if(setColor) stroke(yellow);
         rotate(radians(-60));
         edge(sl, level-1);
     }

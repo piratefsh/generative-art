@@ -1,5 +1,6 @@
 import processingSrc from 'file!processing-js/processing.js'
-import main from 'file!./main.pde'
+import main from 'file!./main_koch.pde'
+// import main from 'file!./main_bounce.pde'
 import Util from 'file!components/Util.pde'
 import Koch from 'file!components/Koch.pde'
 import Ball from 'file!components/Ball.pde'
