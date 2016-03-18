@@ -13,10 +13,10 @@ class Ball{
 
   void update(){
     this.position.add(this.velocity);
-    if(this.position.x < 0 || this.position.x > width){
+    if(this.position.x < this.size/2 || this.position.x > width-this.size/2){
       this.velocity.x *= -1
     }
-    if(this.position.y < 0 || this.position.y > height){
+    if(this.position.y < this.size/2 || this.position.y > height-this.size/2){
       this.velocity.y *= -1
     }
   }
@@ -24,7 +24,7 @@ class Ball{
   void draw(){
     pushMatrix();
     translate(this.position.x, this.position.y);
-    fill(this.fillColor);
+    fill(this.fillColor, 180);
     noStroke();
     ellipse(0, 0, size, size);
     popMatrix();
