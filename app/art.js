@@ -1,5 +1,6 @@
 import processingSrc from 'file!processing-js/processing.js'
-import main from 'file!./main_koch.pde'
+import main from 'file!./main.pde'
+// import main from 'file!./main_koch.pde'
 // import main from 'file!./main_bounce.pde'
 import Util from 'file!components/Util.pde'
 import Koch from 'file!components/Koch.pde'
@@ -27,7 +28,7 @@ export default {
                 }
             })
 
-            const sources = [main, Koch, Ball, Util];
+            const sources = [main, Util];
             canvas.setAttribute('data-processing-sources', sources.join(' '))
 
             // reload Processing to catch changes

@@ -1,8 +1,8 @@
 class Ball{
   int size;
-  int velocity;
-  int position;
-  int fillColor;
+  PVector velocity;
+  PVector position;
+  color fillColor;
 
   Ball(size, col){
     this.size = size;
@@ -24,7 +24,7 @@ class Ball{
   void draw(){
     pushMatrix();
     translate(this.position.x, this.position.y);
-    fill(this.fillColor, 180);
+    fill(this.fillColor);
     noStroke();
     ellipse(0, 0, size, size);
     popMatrix();
