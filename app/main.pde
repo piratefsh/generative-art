@@ -36,6 +36,7 @@ int minCol = 100;
 int maxCol = 230;
 
 void setup() {
+    background(255);
     size(600, 600);
     stroke(255);
 
@@ -46,7 +47,6 @@ void setup() {
 }
 
 void draw() {
-    // background(220);
 
     balls.forEach(function(b){
         b.update();
