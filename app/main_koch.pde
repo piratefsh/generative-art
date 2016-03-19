@@ -19,5 +19,5 @@ void draw(){
     int tesselLevel = 5;
     k = new KochTesselation(center, edgeWidth, tesselLevel, kochLevel, Koch.green);
     k.draw();
-    save();
+    // save();
 }

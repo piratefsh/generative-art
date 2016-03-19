@@ -15,7 +15,7 @@ class KochTesselation{
 
     void draw(){
         pushMatrix();
-        // ellipse(0, 0, 5, 5);
+        ellipse(0, 0, 4, 4);
         stroke(250, 100, 100);
         noFill();
         translate(this.center.x, this.center.y);
