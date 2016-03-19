@@ -1,49 +1,49 @@
 class Ball{
-    PVector position; // x, y
-    PVector velocity; // x, y
-    int size;
+    PVector pos;
+    PVector velocity;
     color col;
+    int radius;
 
-    Ball(size, col) {
-        this.position = Util.randomPoint(); //new PVector(100, 100);
-        this.velocity = Util.randomVelocity8();//new PVector(2, 2);
-        this.size = size;
-        this.col = col;
+    Ball(r, c){
+        this.radius = r;
+        this.col = c;
+
+        this.pos = Util.randomPoint(); //new PVector(100, 100); //x, y
+        this.velocity = Util.randomVelocity();//new PVector(2, 2); //x, y
+        this.velocity.mult(2);
     }
 
     void draw(){
         fill(this.col);
         noStroke();
-        ellipse(this.position.x, this.position.y, this.size, this.size);
+        ellipse(this.pos.x, this.pos.y, this.radius, this.radius);
     }
 
     void update(){
-        if(this.position.x < 0 || this.position.x > width){
-            this.velocity.x *= -1
+        this.pos.add(this.velocity);
+
+        if(this.pos.x < 0 || this.pos.x > width){
+            this.velocity.x *= -1;
         }
-        if(this.position.y < 0 || this.position.y > height){
+        if(this.pos.y < 0 || this.pos.y > height){
             this.velocity.y *= -1;
         }
-
-        this.position.add(this.velocity);
     }
 }
 
 
 var balls = [];
-int numBalls = 20;
-int minCol = 100;
-int maxCol = 230;
 
 void setup() {
-    background(255);
-    size(600, 600);
+    size(400, 400);
     stroke(255);
 
+    numBalls = 20;
     for(int i = 0; i < numBalls; i++){
-        color c =  color(Util.random(minCol, maxCol), Util.random(minCol, maxCol), Util.random(minCol, maxCol))
-        balls.push(new Ball(Util.random(30, 40), c));
+        Ball b =  new Ball(Util.random(20, 40), color(Util.random(100, 220), Util.random(90, 220), Util.random(90, 210)));
+        balls.push(b);
     }
+    background(250);
 }
 
 void draw() {
@@ -53,5 +53,5 @@ void draw() {
         b.draw();
     })
 }
-
+        
 

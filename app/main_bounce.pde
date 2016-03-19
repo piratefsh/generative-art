@@ -1,30 +1,57 @@
-// please see Util.pde for helper function code
+class Ball{
+    PVector position; // x, y
+    PVector velocity; // x, y
+    int size;
+    color col;
 
-int width = 1000;
-int height = 600;
+    Ball(size, col) {
+        this.position = Util.randomPoint(); //new PVector(100, 100);
+        this.velocity = Util.randomVelocity8();//new PVector(2, 2);
+        this.size = size;
+        this.col = col;
+    }
 
-var balls = [];
-int numBalls = 60;
+    void draw(){
+        fill(this.col);
+        noStroke();
+        ellipse(this.position.x, this.position.y, this.size, this.size);
+    }
 
-void setup()
-{
-    size(width, height);
-    background(250);
-    hint(ENABLE_OPENGL_4X_SMOOTH);
+    void update(){
+        if(this.position.x < 0 || this.position.x > width){
+            this.velocity.x *= -1
+        }
+        if(this.position.y < 0 || this.position.y > height){
+            this.velocity.y *= -1;
+        }
 
-    int minCol = 80;
-    int maxCol = 240;
-    for(int i = 0; i < numBalls; i++){
-        int size = Util.random(20, 40);
-        color col = color(Util.random(minCol, maxCol), Util.random(minCol, maxCol), Util.random(minCol, maxCol));
-        balls.push(new Ball(size, col));
+        this.position.add(this.velocity);
     }
 }
 
-void draw(){ 
+
+var balls = [];
+int numBalls = 20;
+int minCol = 100;
+int maxCol = 230;
+
+void setup() {
     background(255);
-    balls.forEach(function(ball){
-        ball.update();
-        ball.draw();
+    size(600, 600);
+    stroke(255);
+
+    for(int i = 0; i < numBalls; i++){
+        color c =  color(Util.random(minCol, maxCol), Util.random(minCol, maxCol), Util.random(minCol, maxCol))
+        balls.push(new Ball(Util.random(30, 40), c));
+    }
+}
+
+void draw() {
+
+    balls.forEach(function(b){
+        b.update();
+        b.draw();
     })
 }
+
+
