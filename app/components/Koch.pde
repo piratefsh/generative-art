@@ -5,10 +5,10 @@ class Koch{
   int edgeWidth = 400;
 
   // colors
-  color pink = color(255, 20, 147);
-  color green = color(154, 205, 50);
-  color red = color(300, 28, 87);
-  color yellow = color(255, 215, 0);
+  static color pink = color(255, 20, 147);
+  static color green = color(154, 205, 50);
+  static color red = color(300, 28, 87);
+  static color yellow = color(255, 215, 0);
 
   Koch(levels, width){
     this.levels = levels;
@@ -19,7 +19,7 @@ class Koch{
     int c2 = Math.pow(edgeWidth, 2) + Math.pow(edgeWidth/2, 2);
     return -Math.sqrt(c2)/4;
   }
-  void draw(){
+  void draw(c){
     pushMatrix();
     int levels = this.levels;
     int edgeWidth = this.edgeWidth;
@@ -31,9 +31,9 @@ class Koch{
     translate(offsetW, offsetH);
 
     // set styles
-    strokeWeight(2);
+    strokeWeight(3);
     strokeJoin(ROUND);
-    stroke(pink);
+    stroke(c);
 
     // draw three edges in a triangle
     this.edge(edgeWidth, levels) 
