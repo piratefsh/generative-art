@@ -15,20 +15,23 @@ class Koch{
     this.edgeWidth = width;
   }
 
+  void height(){
+    int c2 = Math.pow(edgeWidth, 2) + Math.pow(edgeWidth/2, 2);
+    return -Math.sqrt(c2)/4;
+  }
   void draw(){
     pushMatrix();
     int levels = this.levels;
     int edgeWidth = this.edgeWidth;
 
-    int c2 = Math.pow(edgeWidth, 2) + Math.pow(edgeWidth/2, 2);
     int offsetW = -edgeWidth/2;
-    int offsetH = -Math.sqrt(c2)/4;
+    int offsetH = this.height();
 
     // start at x, y = 100, 200
     translate(offsetW, offsetH);
 
     // set styles
-    strokeWeight(4);
+    strokeWeight(2);
     strokeJoin(ROUND);
     stroke(pink);
 
@@ -74,5 +77,24 @@ class Koch{
         rotate(radians(-60));
         edge(sl, level-1);
     }
-}
+  }
+
+  void estimatedArea(){
+    return (Math.sqrt(3) / 4) * this.edgeWidth*this.edgeWidth;
+  }
+
+  void area(){
+    float h = this.height();
+    int b = this.edgeWidth/2;
+    int n = this.level;
+    float a0 = h * b / 2;
+    return a0/5 * (8 - 3 * Math.pow((4/9)), n);
+  }
+
+  void thirdLength(){
+    float h = this.height();
+    float a = this.area/3;
+    float a0 = (5*a)/(8 - 3 * Math.pow((4/9)), n);
+    float tl = 2* (a0 * 2) / h;
+  }
 }

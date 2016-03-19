@@ -1,9 +1,9 @@
-int width = 600;
-int height = 600;
+int width = 1024;
+int height = 800;
 
 KochTesselation k;
 int levels = 0;
-int edgeWidth = 100;
+int edgeWidth = 200;
 
 void setup()
 {
@@ -14,7 +14,7 @@ void setup()
 }
 
 void draw(){ 
-    PVector center = new PVector(300, 300);
-    k = new KochTesselation(center, edgeWidth, 2)
+    PVector center = new PVector(width/2, height/2);
+    k = new KochTesselation(center, edgeWidth, 4)
     k.draw();
 }
