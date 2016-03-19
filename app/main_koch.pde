@@ -1,26 +1,20 @@
 int width = 600;
 int height = 600;
 
-Koch k;
+KochTesselation k;
 int levels = 0;
-int edgeWidth = 400;
+int edgeWidth = 100;
 
 void setup()
 {
     size(width, height);
-    background(20);
     hint(ENABLE_OPENGL_4X_SMOOTH);
-
-
-    frameRate(1);
-    
-    // noLoop();
+    noLoop();
+    background(255);
 }
 
 void draw(){ 
-    if(levels >= 4) return;
-    levels++;
-    k = new Koch(levels, edgeWidth)
+    PVector center = new PVector(300, 300);
+    k = new KochTesselation(center, edgeWidth, 2)
     k.draw();
-    
 }

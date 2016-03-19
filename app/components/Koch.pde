@@ -16,16 +16,16 @@ class Koch{
   }
 
   void draw(){
+    pushMatrix();
     int levels = this.levels;
-    int edgeWidth = this.edgeWidth
+    int edgeWidth = this.edgeWidth;
 
-    background(0, 0);
     int c2 = Math.pow(edgeWidth, 2) + Math.pow(edgeWidth/2, 2);
-    int offsetW = (width-edgeWidth)/2;
-    int offsetH = height-Math.sqrt(c2);
+    int offsetW = -edgeWidth/2;
+    int offsetH = -Math.sqrt(c2)/4;
 
     // start at x, y = 100, 200
-    translate(offsetW, 200);
+    translate(offsetW, offsetH);
 
     // set styles
     strokeWeight(4);
@@ -39,6 +39,7 @@ class Koch{
     rotate(radians(120))
     this.edge(edgeWidth, levels) 
 
+    popMatrix();
     // save to png
     // save('koch-'+levels+'.png')
   }
@@ -59,21 +60,17 @@ class Koch{
     // recursive case, draw edge for every segment
     else {
         // _
-        if(setColor) stroke(pink);
         edge(sl, level-1);
 
         // _/
-        if(setColor) stroke(green);
         rotate(radians(-60));
         edge(sl, level-1);
 
         // _/\
-        if(setColor) stroke(red);
         rotate(radians(120));
         edge(sl, level-1);
 
         // _/\_
-        if(setColor) stroke(yellow);
         rotate(radians(-60));
         edge(sl, level-1);
     }
