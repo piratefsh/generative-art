@@ -2,8 +2,13 @@
 
 ##Demos for FOSSASIA 2016.
 
-### For ball demo, uncomment `main_bounce.pde` in `app/components/art.js`
-### For Koch demo, uncomment `main_koch.pde`.
+### Ball demo
+
+uncomment `main_bounce.pde` in `app/components/art.js`
+
+### Koch snowflake demo
+
+uncomment `main_koch.pde` in `app/components/art.js`
  
 ## Development 
 ### Install
