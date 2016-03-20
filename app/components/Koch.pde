@@ -31,9 +31,9 @@ class Koch{
     translate(offsetW, offsetH);
 
     // set styles
-    strokeWeight(1);
+    strokeWeight(2);
     strokeJoin(ROUND);
-    stroke(c, 40);
+    stroke(c, 50);
 
     // draw three edges in a triangle
     this.edge(edgeWidth, levels) 
@@ -81,20 +81,5 @@ class Koch{
 
   void estimatedArea(){
     return (Math.sqrt(3) / 4) * this.edgeWidth*this.edgeWidth;
-  }
-
-  void area(){
-    float h = this.height();
-    int b = this.edgeWidth/2;
-    int n = this.level;
-    float a0 = h * b / 2;
-    return a0/5 * (8 - 3 * Math.pow((4/9)), n);
-  }
-
-  void thirdLength(){
-    float h = this.height();
-    float a = this.area/3;
-    float a0 = (5*a)/(8 - 3 * Math.pow((4/9)), n);
-    float tl = 2* (a0 * 2) / h;
   }
 }
