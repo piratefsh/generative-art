@@ -1,9 +1,9 @@
 # Generative art with Processing.js
 
-Demos for FOSSASIA 2016.
+##Demos for FOSSASIA 2016.
 
-For ball demo, uncomment `main_bounce.pde` in `art.js`
-For Koch demo, uncomment `main_koch.pde` in `art.js`
+### For ball demo, uncomment `main_bounce.pde` in `app/components/art.js`
+### For Koch demo, uncomment `main_koch.pde`.
  
 ## Development 
 ### Install
