@@ -1,10 +1,9 @@
 # Generative art with Processing.js
-Experiments with generative art.
 
-## Demos
-1. [Crystaline](http://piratefsh.github.io/generative-art/public/trees/)
-2. [Intersections](http://piratefsh.github.io/generative-art/public/intersections/)
-3. [Color typewriter](http://piratefsh.github.io/generative-art/public/typewriter/). Not quite generative art, but fun. 
+Demos for FOSSASIA 2016.
+
+For ball demo, uncomment `main_bounce.pde` in `art.js`
+For Koch demo, uncomment `main_koch.pde` in `art.js`
  
 ## Development 
 ### Install
