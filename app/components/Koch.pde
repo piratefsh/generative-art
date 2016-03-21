@@ -31,9 +31,9 @@ class Koch{
     translate(offsetW, offsetH);
 
     // set styles
-    strokeWeight(2);
+    strokeWeight(4);
     strokeJoin(ROUND);
-    stroke(c, 50);
+    stroke(c);
 
     // draw three edges in a triangle
     this.edge(edgeWidth, levels) 

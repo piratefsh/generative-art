@@ -1,6 +1,6 @@
 import processingSrc from 'file!processing-js/processing.js'
-import main from 'file!./main.pde'
-// import main from 'file!./main_koch.pde'
+// import main from 'file!./main.pde'
+import main from 'file!./main_koch.pde'
 // import main from 'file!./main_bounce.pde'
 import Util from 'file!components/Util.pde'
 import KochTesselation from 'file!components/KochTesselation.pde'
