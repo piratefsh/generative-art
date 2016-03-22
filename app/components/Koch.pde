@@ -31,7 +31,7 @@ class Koch{
     translate(offsetW, offsetH);
 
     // set styles
-    strokeWeight(4);
+    strokeWeight(2);
     strokeJoin(ROUND);
     stroke(c);
 

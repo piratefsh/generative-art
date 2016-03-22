@@ -16,7 +16,7 @@ void setup()
 void draw(){ 
     PVector center = new PVector(width/2, height/2);
     int kochLevel = 3;
-    int tesselLevel = 4;
+    int tesselLevel = 2;
     k = new KochTesselation(center, edgeWidth, tesselLevel, kochLevel, Koch.green);
     k.draw();
     // save();
