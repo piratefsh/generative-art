@@ -22,7 +22,7 @@ class IntersectionsAlt {
         this.points.push({
             id: -1,
             coord: new PVector(mouseX, mouseY),
-            radius: width/6,
+            radius: 150,
             velocity: vel,
         });
     }
@@ -55,6 +55,7 @@ class IntersectionsAlt {
         rect(0, 0, width, height);
 
         stroke(255);
+        strokeWeight(0.5);
         // if point intersect with other points, draw line
         this.points.forEach(function(p, j){
             
